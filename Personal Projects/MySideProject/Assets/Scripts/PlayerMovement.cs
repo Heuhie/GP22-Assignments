@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float turnAngle;
 
 
+    public TrailRenderer wheelTrail;
     public float vertInput;
 
 
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        wheelTrail = GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
