@@ -74,5 +74,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 sideVel = transform.up * Vector3.Dot(rb.velocity, transform.up);
 
         rb.velocity = forwardVel + (sideVel * drift);
+
+ 
     }
 }
