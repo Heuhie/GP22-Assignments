@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
     private float griptreshhold = 4f;
     [SerializeField]
     private float grip;
+    [SerializeField]
+    private float steeringSpeedScale;
+    [SerializeField]
+    private float drag = 4f;
 
 
     public TrailRenderer[] wheelTrailList;
@@ -47,9 +51,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rb.velocity.magnitude < maxSpeed)
+        if (rb.velocity.magnitude < maxSpeed && vertInput != 0)
         {
+            rb.drag = 0;
             Speed();
+        }
+
+        if(vertInput == 0)
+        {
+            Decelerate();
         }
         Steering();
         SideDrift();
@@ -60,14 +70,22 @@ public class PlayerMovement : MonoBehaviour
     void Speed()
     {
         Vector2 speedVector = transform.right * vertInput * acceleration;
-
         rb.AddForce(speedVector, ForceMode2D.Force);
+    }
+
+    void Decelerate()
+    {
+        rb.drag = Mathf.Lerp(rb.drag, drag, Time.deltaTime * 3);
     }
 
     void Steering()
     {
-        turnAngle -= zAxisRot * turningspeed;
+        float speedScale = rb.velocity.magnitude / steeringSpeedScale;
+        speedScale = Mathf.Clamp01(speedScale);
+        turnAngle -= zAxisRot * turningspeed * speedScale;
+       
         Vector3 transformDirection = rb.transform.InverseTransformDirection(rb.velocity);
+        
 
 
         if (transformDirection.x >= 0)
