@@ -309,7 +309,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 150
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1345,7 +1345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815765174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.67, y: 0, z: 0}
+  m_LocalPosition: {x: -5.67, y: -6.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1369,13 +1369,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628c1beb3d5ae74488b568428bab3a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  maxSpeed: 10
   acceleration: 5
   drift: 0.9
-  turningspeed: 5
+  turningspeed: 4
   zAxisRot: 0
   turnAngle: 0
-  wheelTrail: {fileID: 0}
+  griptreshhold: 3
+  grip: 0
+  wheelTrailList:
+  - {fileID: 1160073445}
+  - {fileID: 1642298415}
+  - {fileID: 1291296846}
+  - {fileID: 22299945}
   vertInput: 0
 --- !u!61 &815765177
 BoxCollider2D:
@@ -1622,7 +1628,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 150
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2079,7 +2085,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 150
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2680,7 +2686,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 150
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
-    
+
     [SerializeField]
-    private float speed = 5f;
+    public float maxSpeed;
     [SerializeField]
     private float acceleration = 5f;
     [SerializeField]
@@ -18,9 +18,13 @@ public class PlayerMovement : MonoBehaviour
     private float zAxisRot;
     [SerializeField]
     private float turnAngle;
+    [SerializeField]
+    private float griptreshhold = 4f;
+    [SerializeField]
+    private float grip;
 
 
-    public TrailRenderer wheelTrail;
+    public TrailRenderer[] wheelTrailList;
     public float vertInput;
 
 
@@ -28,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        wheelTrail = GetComponent<TrailRenderer>();
+        //wheelTrail = GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
@@ -43,9 +47,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Speed();
+        if (rb.velocity.magnitude < maxSpeed)
+        {
+            Speed();
+        }
         Steering();
         SideDrift();
+        Tiremarks();
+        Debug.Log(rb.velocity.magnitude);
     }
 
     void Speed()
@@ -58,7 +67,15 @@ public class PlayerMovement : MonoBehaviour
     void Steering()
     {
         turnAngle -= zAxisRot * turningspeed;
-        rb.MoveRotation(turnAngle);
+        Vector3 transformDirection = rb.transform.InverseTransformDirection(rb.velocity);
+
+
+        if (transformDirection.x >= 0)
+        {
+            rb.MoveRotation(turnAngle);
+        }
+        else
+            rb.MoveRotation(-turnAngle);
     }
 
     //used by PlayerInput
@@ -74,7 +91,27 @@ public class PlayerMovement : MonoBehaviour
         Vector2 sideVel = transform.up * Vector3.Dot(rb.velocity, transform.up);
 
         rb.velocity = forwardVel + (sideVel * drift);
-
+        Debug.Log(sideVel);
  
+    }
+
+    void Tiremarks()
+    {
+        grip = Mathf.Abs(Vector3.Dot(transform.up, rb.velocity));
+        if(grip < griptreshhold)
+        {
+            foreach(TrailRenderer wheel in wheelTrailList)
+            {
+                wheel.emitting = false;
+            }
+               
+        }
+        else
+        {
+            foreach(TrailRenderer wheel in wheelTrailList)
+            {
+                wheel.emitting = true;
+            }
+        }
     }
 }
