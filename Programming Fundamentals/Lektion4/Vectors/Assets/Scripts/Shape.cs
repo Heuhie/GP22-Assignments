@@ -40,30 +40,8 @@ public class Shape : ProcessingLite.GP21
         UpdateOnMouseClick();
         circlePos += velocity * speed * Time.deltaTime;
 
-        if (circlePos.x < 0 && !right)
-        {
-            right = true;
-            left = false;
-            velocity.x = -velocity.x;
-        }
-        if(circlePos.x > Width && !left)
-        {
-            right = false;
-            left = true;
-            velocity.x = -velocity.x;
-        }
-        if(circlePos.y < 0 && !down)
-        {
-            down = true;
-            up = false;
-            velocity.y = -velocity.y;
-        }
-        if (circlePos.y >Height && !up)
-        {
-            down = false;
-            up = true;
-            velocity.y = -velocity.y;
-        }
+        KeepInBounds();
+        
 
         Circle(circlePos.x, circlePos.y, circleDiameter);
         //Debug.Log(circlePos);
@@ -97,5 +75,37 @@ public class Shape : ProcessingLite.GP21
             }
 
         }
+    }
+
+    void KeepInBounds()
+    {
+        if (circlePos.x < 0 || circlePos.x > Width)
+        {
+            circlePos.x = Mathf.Clamp(circlePos.x, 0, Width);
+            velocity.x = -velocity.x;
+        }
+        if (circlePos.y < 0 || circlePos.y > Height)
+        {
+            circlePos.y = Mathf.Clamp(circlePos.y, 0, Height);
+            velocity.y = -velocity.y;
+        }
+        //if (circlePos.x > Width && !left)
+        //{
+        //    right = false;
+        //    left = true;
+        //    velocity.x = -velocity.x;
+        //}
+        //if (circlePos.y < 0 && !down)
+        //{
+        //    down = true;
+        //    up = false;
+        //    velocity.y = -velocity.y;
+        //}
+        //if (circlePos.y > Height && !up)
+        //{
+        //    down = false;
+        //    up = true;
+        //    velocity.y = -velocity.y;
+        //}
     }
 }
