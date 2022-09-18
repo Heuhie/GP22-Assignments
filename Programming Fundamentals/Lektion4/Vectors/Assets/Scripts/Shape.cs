@@ -39,13 +39,13 @@ public class Shape : ProcessingLite.GP21
 
         UpdateOnMouseClick();
         circlePos += velocity * speed * Time.deltaTime;
-
+     
         KeepInBounds();
-        
 
+        OnMouseRelease();
+        
         Circle(circlePos.x, circlePos.y, circleDiameter);
         //Debug.Log(circlePos);
-
         DrawLineOnMouseDown();
         //CircleMovement();
 
@@ -55,6 +55,7 @@ public class Shape : ProcessingLite.GP21
     {
         if (Input.GetMouseButtonDown(0))
         {
+            velocity = Vector3.zero;
             circlePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
@@ -65,15 +66,34 @@ public class Shape : ProcessingLite.GP21
         {
             lineEndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Line(circlePos.x, circlePos.y, lineEndPos.x, lineEndPos.y);
-            velocity = lineEndPos - circlePos;
             //speed = velocity.magnitude;
 
+            //for moving circle while drawing line
+            #region
+            //velocity = lineEndPos - circlePos;
+
+            //if (velocity.magnitude >= speedLimit)
+            //{
+            //    velocity = velocity.normalized * speedLimit;
+            //    Debug.Log(velocity);
+            //}
+            #endregion
+
+        }
+    }
+
+    void OnMouseRelease()
+    {
+        Vector3 updateCirclePos = Vector3.zero;
+        if(Input.GetMouseButtonUp(0))
+        {
+            velocity = lineEndPos - circlePos;
+
+            //for moving circle after drawing line
             if (velocity.magnitude >= speedLimit)
             {
                 velocity = velocity.normalized * speedLimit;
-                Debug.Log(velocity);
             }
-
         }
     }
 
