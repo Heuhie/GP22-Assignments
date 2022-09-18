@@ -309,7 +309,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 150
+  m_Time: 10
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1378,6 +1378,7 @@ MonoBehaviour:
   griptreshhold: 3
   grip: 0
   steeringSpeedScale: 8
+  drag: 4
   wheelTrailList:
   - {fileID: 1160073445}
   - {fileID: 1642298415}
@@ -1629,7 +1630,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 150
+  m_Time: 10
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2086,7 +2087,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 150
+  m_Time: 10
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2687,7 +2688,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 150
+  m_Time: 10
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

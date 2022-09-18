@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float drift = 1f;
     [SerializeField]
+    private float brakeforce = 10f;
+    [SerializeField]
     private float turningspeed = 5f;
     [SerializeField]
     private float zAxisRot;
@@ -27,10 +29,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float drag = 4f;
 
+    private bool braking = false;
+
 
     public TrailRenderer[] wheelTrailList;
     public float vertInput;
-
 
     // Start is called before the first frame update
     void Start()
@@ -51,23 +54,40 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rb.velocity.magnitude < maxSpeed && vertInput != 0)
+        if (vertInput > 0 && rb.velocity.magnitude < maxSpeed)
         {
             rb.drag = 0;
-            Speed();
+            Accelerate();
+        }
+
+        if(vertInput < 0 && rb.velocity.magnitude < maxSpeed/2)
+        {
+            rb.drag = 0;
+            Accelerate();
         }
 
         if(vertInput == 0)
         {
             Decelerate();
         }
+
+        if(rb.velocity.x > 0 && vertInput < 0)
+        {
+            Braking();
+            braking = true;
+        }
+        else
+        {
+            braking = false;
+        }
+
         Steering();
         SideDrift();
         Tiremarks();
-        Debug.Log(rb.velocity.magnitude);
+        Debug.Log(rb.velocity.x);
     }
 
-    void Speed()
+    void Accelerate()
     {
         Vector2 speedVector = transform.right * vertInput * acceleration;
         rb.AddForce(speedVector, ForceMode2D.Force);
@@ -78,22 +98,23 @@ public class PlayerMovement : MonoBehaviour
         rb.drag = Mathf.Lerp(rb.drag, drag, Time.deltaTime * 3);
     }
 
+    void Braking()
+    {
+        rb.drag = brakeforce;
+    }
+
     void Steering()
     {
         float speedScale = rb.velocity.magnitude / steeringSpeedScale;
         speedScale = Mathf.Clamp01(speedScale);
-        turnAngle -= zAxisRot * turningspeed * speedScale;
-       
+
         Vector3 transformDirection = rb.transform.InverseTransformDirection(rb.velocity);
-        
-
-
-        if (transformDirection.x >= 0)
-        {
-            rb.MoveRotation(turnAngle);
-        }
+        if (transformDirection.x <= 0)
+            turnAngle += zAxisRot * turningspeed * speedScale;
         else
-            rb.MoveRotation(-turnAngle);
+            turnAngle -= zAxisRot * turningspeed * speedScale;
+
+        rb.MoveRotation(turnAngle);
     }
 
     //used by PlayerInput
@@ -101,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
     {
         vertInput = controllerInput.x;
         zAxisRot = controllerInput.y;
+        //Debug.Log(vertInput);
     }
 
     void SideDrift()
@@ -109,26 +131,25 @@ public class PlayerMovement : MonoBehaviour
         Vector2 sideVel = transform.up * Vector3.Dot(rb.velocity, transform.up);
 
         rb.velocity = forwardVel + (sideVel * drift);
-        Debug.Log(sideVel);
+        //Debug.Log(sideVel);
  
     }
 
     void Tiremarks()
     {
         grip = Mathf.Abs(Vector3.Dot(transform.up, rb.velocity));
-        if(grip < griptreshhold)
+        if(grip > griptreshhold || braking)
         {
-            foreach(TrailRenderer wheel in wheelTrailList)
+            foreach (TrailRenderer wheel in wheelTrailList)
             {
-                wheel.emitting = false;
+                wheel.emitting = true;
             }
-               
         }
         else
         {
-            foreach(TrailRenderer wheel in wheelTrailList)
+            foreach (TrailRenderer wheel in wheelTrailList)
             {
-                wheel.emitting = true;
+                wheel.emitting = false;
             }
         }
     }

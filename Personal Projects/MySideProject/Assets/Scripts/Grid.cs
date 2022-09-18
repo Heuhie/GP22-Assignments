@@ -35,7 +35,7 @@ public class Grid : MonoBehaviour
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
                 bool driveable = !(Physics2D.OverlapCircle(worldPoint, nodeRadius, undriveable));
                 grid[x, y] = new Node(driveable, worldPoint);
-                Debug.Log(driveable);
+                //Debug.Log(driveable);
             }
         }
     }
