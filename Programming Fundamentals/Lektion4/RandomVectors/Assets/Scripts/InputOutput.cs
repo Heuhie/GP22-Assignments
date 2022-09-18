@@ -9,18 +9,16 @@ public class InputOutput : ProcessingLite.GP21
     void Start()
     {
 
-
+        myText = "Tryck enter för att generara en ny vektor";
         Background(0, 0, 255);
-        Line(5, 2, 6, 4);
-        Text("Hello", 5, 5);
-        Debug.Log(Height);
     }
 
     // Update is called once per frame
     void Update()
     {
         Background(0, 0, 255);
-        myText = "Tryck enter för att generara en ny vektor";
+        Fill(0);
+        Text(myText, Width / 2, Height / 2);
 
 
     }

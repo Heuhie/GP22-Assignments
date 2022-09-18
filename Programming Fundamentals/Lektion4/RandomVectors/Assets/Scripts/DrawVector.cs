@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DrawVector : ProcessingLite.GP21
 {
@@ -17,7 +18,8 @@ public class DrawVector : ProcessingLite.GP21
     private Vector2 startRandomVector;
     private Vector2 endRandomVector;
     public bool finishedDrawing;
-    public bool newVectorGenerated; 
+    public bool newVectorGenerated;
+    public TextMeshProUGUI vectorDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class DrawVector : ProcessingLite.GP21
         startRandomVector = new Vector2(Random.Range(0, Width), Random.Range(0, Height));
         endRandomVector = new Vector2(Random.Range(0, Width), Random.Range(0, Height));
         randomVector = endRandomVector - startRandomVector;
+
         
 
     }
@@ -83,11 +86,13 @@ public class DrawVector : ProcessingLite.GP21
 
     }
 
-    void GenerateRandomVector()
+    public void GenerateRandomVector()
     {
         startRandomVector = new Vector2(Random.Range(0, Width), Random.Range(0, Height));
         endRandomVector = new Vector2(Random.Range(0, Width), Random.Range(0, Height));
         randomVector = endRandomVector - startRandomVector;
+        string tmpTXT = vectorDisplay.text;
+        vectorDisplay.text = tmpTXT + " " + randomVector.x + ", " + randomVector.y;
     }
 
     void PressToContinue()
@@ -97,4 +102,5 @@ public class DrawVector : ProcessingLite.GP21
             GenerateRandomVector();
         }
     }
+
 }
