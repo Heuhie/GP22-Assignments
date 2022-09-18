@@ -309,7 +309,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 10
+  m_Time: 180
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -373,7 +373,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22299943}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1049,8 +1049,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 13.1
+  orthographic: 1
+  orthographic size: 4.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1074,7 +1074,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -5.78, y: -6.07, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1094,7 +1094,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carToFollow: {fileID: 815765175}
-  zZoom: -7.07
+  playerMovement: {fileID: 815765176}
+  zMaxZoom: -11
+  zMinZoom: -5
+  stopScalingSpeed: 10
+  zoomScaling: 0.3
 --- !u!1 &524157174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,20 +1375,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 10
   acceleration: 5
-  drift: 0.9
+  drift: 0.98
+  brakeforce: 2
   turningspeed: 4
   zAxisRot: 0
   turnAngle: 0
-  griptreshhold: 3
+  griptreshhold: 2
   grip: 0
   steeringSpeedScale: 8
-  drag: 4
+  drag: 2
   wheelTrailList:
   - {fileID: 1160073445}
   - {fileID: 1642298415}
   - {fileID: 1291296846}
   - {fileID: 22299945}
   vertInput: 0
+  currentspeed: 0
 --- !u!61 &815765177
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1630,7 +1636,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 10
+  m_Time: 180
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1694,7 +1700,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160073443}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -2087,7 +2093,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 10
+  m_Time: 180
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2151,7 +2157,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291296844}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -2688,7 +2694,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 10
+  m_Time: 180
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2752,7 +2758,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642298413}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

@@ -6,14 +6,21 @@ public class MainCamera : MonoBehaviour
 {
     [SerializeField]
     private Transform carToFollow;
+
     private float x, y;
 
-    public float zZoom = -5f;
+    public PlayerMovement playerMovement;
+    public float zMaxZoom = -11f;
+    public float zMinZoom = -5f;
+    public float stopScalingSpeed = 10f;
+    public float zoomScaling;
+
+    private float zZoom = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        //transform.position = new Vector3(transform.position.x, transform.position.y, zZoom);
+        zoomScaling = (zMaxZoom - zMinZoom) / stopScalingSpeed;
     }
 
     // Update is called once per frame
@@ -22,6 +29,12 @@ public class MainCamera : MonoBehaviour
         x = carToFollow.position.x;
         y = carToFollow.position.y;
 
-        transform.position = new Vector3(x, y, zZoom);
+        zZoom = zMinZoom + (zoomScaling * playerMovement.currentspeed);
+
+        zZoom = Mathf.Clamp(zZoom, zMaxZoom, zMinZoom);
+
+        transform.position = new Vector3(x, y, -10f);
+        Camera.main.orthographicSize = -zZoom;
+        Debug.Log(zZoom);
     }
 }

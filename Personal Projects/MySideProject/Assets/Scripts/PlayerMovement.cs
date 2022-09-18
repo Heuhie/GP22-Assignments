@@ -31,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool braking = false;
 
-
     public TrailRenderer[] wheelTrailList;
     public float vertInput;
+    public float currentspeed;
 
     // Start is called before the first frame update
     void Start()
@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             Decelerate();
         }
 
-        if(rb.velocity.x > 0 && vertInput < 0)
+        if(rb.velocity.magnitude > 0 && vertInput < 0)
         {
             Braking();
             braking = true;
@@ -84,7 +84,11 @@ public class PlayerMovement : MonoBehaviour
         Steering();
         SideDrift();
         Tiremarks();
-        Debug.Log(rb.velocity.x);
+
+        currentspeed = rb.velocity.magnitude;
+
+        //Debug.Log(rb.velocity.magnitude);
+
     }
 
     void Accelerate()
