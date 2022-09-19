@@ -27,7 +27,7 @@ public class Shape : ProcessingLite.GP21
     void Start()
     {
         velocity = Vector3.zero;
-        color = Random.Range(0, 255);
+        color = Random.Range(0, 256);
         circlePos = new Vector3(Width / 2, Height / 2);
         Circle(circlePos.x, circlePos.y, circleDiameter);
     }
