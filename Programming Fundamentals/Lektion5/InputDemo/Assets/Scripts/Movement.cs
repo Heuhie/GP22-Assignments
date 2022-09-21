@@ -9,10 +9,6 @@ public class Movement : ProcessingLite.GP21
 
     public float speed = 5f;
     public float diameter = 1f;
-    public float circlePosX;
-    public float circlePosY;
-    public float squarePosX;
-    public float squarePosY;
     public float acceleration;
     public float maxSpeed;
     public bool isGravityActive;
@@ -22,6 +18,10 @@ public class Movement : ProcessingLite.GP21
     private Vector3 velocity;
     private float xInput;
     private float yInput;
+    private float circlePosX;
+    private float circlePosY;
+    private float squarePosX;
+    private float squarePosY;
     private Vector3 inputVector;
     private Vector3 circlePos;
     private Vector3 squarePos;
@@ -32,18 +32,21 @@ public class Movement : ProcessingLite.GP21
     {
         Background(r, g, b);
 
+        //Set startposition of circle
         circlePosX = Width / 2 + 1;
         circlePosY = Height / 2;
         circlePos = new Vector3(circlePosX, circlePosY);
 
+        //Set startposition of square
         squarePosX = Width / 2 - 1;
         squarePosY = Height / 2;
         squarePos = new Vector3(squarePosX, squarePosY);
 
-
+        //initial color and position of circle
         Fill(0, 255, 0);
         Circle(circlePosX, circlePosY, diameter);
 
+        //initial color and position of aquare
         Fill(255, 0, 0);
         Square(squarePos.x, squarePos.y, diameter);
     }
@@ -52,6 +55,8 @@ public class Movement : ProcessingLite.GP21
     void Update()
     {
         Background(r, g, b);
+
+        //get input and normalize vector
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
         inputVector = new Vector3(xInput, yInput).normalized;
@@ -70,10 +75,13 @@ public class Movement : ProcessingLite.GP21
             Drag();
         }
 
+        velocity.x = Mathf.Clamp(velocity.x, -maxSpeed, maxSpeed);
+        velocity.y = Mathf.Clamp(velocity.y, -maxSpeed, maxSpeed);
         circlePos += velocity * Time.deltaTime;
 
-        circlePos = CheckBounds(circlePos);
-        squarePos = CheckBounds(squarePos);
+        //Checks if shape is within bounds
+        circlePos = CheckBoundsCircle(circlePos);
+        squarePos = CheckBoundsSquare(squarePos);
 
         //Draw shapes
         Fill(0, 255, 0);
@@ -82,6 +90,7 @@ public class Movement : ProcessingLite.GP21
         Fill(255, 0, 0);
         Square(squarePos.x, squarePos.y, diameter);
 
+        Debug.Log(velocity);
     }
 
     void AccelerationMovement()
@@ -100,11 +109,18 @@ public class Movement : ProcessingLite.GP21
         {
             squarePos.y -= gravity * Time.deltaTime;
         }
+
         squarePos += inputVector * speed * Time.deltaTime;
     }
 
     void Drag()
     {
+        if (isGravityActive)
+        {
+
+            velocity.y -= gravity * Time.deltaTime;
+        }
+
         velocity -= velocity * drag * Time.deltaTime;
     }
 
@@ -117,20 +133,35 @@ public class Movement : ProcessingLite.GP21
     }
 
 
-    Vector3 CheckBounds(Vector3 shapePosition)
+    Vector3 CheckBoundsCircle(Vector3 shapePosition)
     {
-        if (shapePosition.x > Width)
-            shapePosition.x = 0;
+        if (shapePosition.x - diameter/2 > Width)
+            shapePosition.x = 0 - diameter/2;
 
-        if (shapePosition.x < 0)
-            shapePosition.x = Width;
+        if (shapePosition.x + diameter/2 < 0)
+            shapePosition.x = Width + diameter/2;
 
-        if (shapePosition.y > Height)
-            shapePosition.y = 0;
-
-        if (shapePosition.y < 0)
-            shapePosition.y = Height;
+        if (shapePosition.y > Height || shapePosition.y < 0)
+        {
+            velocity.y *= -1;
+            shapePosition.y = Mathf.Clamp(shapePosition.y, 0, Height);
+        }
 
         return new Vector3(shapePosition.x, shapePosition.y);
     }
+
+    Vector3 CheckBoundsSquare(Vector3 shapePosition)
+    {
+        if (shapePosition.x - diameter/2 > Width)
+            shapePosition.x = 0;
+
+        if (shapePosition.x + diameter/2 < 0)
+            shapePosition.x = Width;
+
+        if (shapePosition.y + diameter/2 > Height || shapePosition.y - diameter/2 < 0) 
+            shapePosition.y = Mathf.Clamp(shapePosition.y, 0, Height);
+
+        return new Vector3(shapePosition.x, shapePosition.y);
+    }
+
 }
