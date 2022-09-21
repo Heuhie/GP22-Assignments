@@ -99,12 +99,12 @@ public class Shape : ProcessingLite.GP21
 
     void KeepInBounds()
     {
-        if (circlePos.x < 0 || circlePos.x > Width)
+        if (circlePos.x - circleDiameter/2 < 0 || circlePos.x + circleDiameter/2 > Width)
         {
             circlePos.x = Mathf.Clamp(circlePos.x, 0, Width);
             velocity.x = -velocity.x;
         }
-        if (circlePos.y < 0 || circlePos.y > Height)
+        if (circlePos.y - circleDiameter/2 < 0 || circlePos.y + circleDiameter/2 > Height)
         {
             circlePos.y = Mathf.Clamp(circlePos.y, 0, Height);
             velocity.y = -velocity.y;
