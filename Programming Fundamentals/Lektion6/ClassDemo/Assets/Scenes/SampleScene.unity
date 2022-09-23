@@ -217,16 +217,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 476e2bba4ca46f549b97f96b9ecbc0f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 953720ccf21fe4a47bc07d887c85d355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   r: 0
   g: 0
-  b: 0
-  speed: 5
-  diameter: 1
-  acceleration: 5
-  maxSpeed: 10
-  isGravityActive: 0
-  gravity: 9.8
-  drag: 1
+  b: 88
+  numberOfBalls: 10
