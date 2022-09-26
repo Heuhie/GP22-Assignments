@@ -50,6 +50,11 @@ public class Ball : ProcessingLite.GP21
         position += velocity * Time.deltaTime;
     }
 
+    public Vector2 GetBallPosition()
+    {
+        return position;
+    }
+
     //Draw shape to screen
     public void DrawBall()
     {
@@ -74,7 +79,7 @@ public class Ball : ProcessingLite.GP21
     }
 
     //Check for collisions with other shapes
-    public bool CheckCollision(Ball ball1, Ball[] ballz, int index)
+    public void CheckCollision(Ball ball1, Ball[] ballz, int index)
     {
         bool isCollision = false;
         for (int i = index + 1; i < ballz.Length; i++)
@@ -84,7 +89,7 @@ public class Ball : ProcessingLite.GP21
 
             if (Mathf.Abs(ball1.position.x - ball2.position.x) > maxDistance || Mathf.Abs(ball1.position.y - ball2.position.y) > maxDistance)
             {
-                isCollision = false;
+                return;
             }
             else if (Vector2.Distance(ball1.position, ball2.position) > maxDistance)
             {
@@ -92,13 +97,14 @@ public class Ball : ProcessingLite.GP21
             }
             else
             {
+
                 ball1.velocity *= -1f;
                 ball2.velocity *= -1f;
 
-                isCollision = true;
+                return;
             }
            
         }
-        return isCollision;
+        return;
     }
 }

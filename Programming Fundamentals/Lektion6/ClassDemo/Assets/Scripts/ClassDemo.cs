@@ -78,16 +78,32 @@ public class ClassDemo : ProcessingLite.GP21
         for (int i = 0; i < balls.Length; i++)
         {
             balls[i] = new Ball();
+            CheckSpawn(balls[i], balls, i);
             CheckSpawn(balls[i], player);
         }
     }
 
-    private void SpawnBalls()
+    //Not working correctly
+    //Check that newly spawned balls doesn't spawn on other balls
+    //index indicates where to start in the array
+    private void CheckSpawn(Ball ball, Ball[] balls, int index)
     {
+        for (int i = index -1; i >= 0; i--)
+        {
+            Vector2 tmpVector = balls[i].position;
+            while (ball.position.x > tmpVector.x - 2 && ball.position.x < tmpVector.x + 2)
+            {
+                ball.position.x = Random.Range(2, Width - 2);
+            }
 
+            while (ball.position.y > tmpVector.y - 2 && ball.position.y < tmpVector.y + 2)
+            {
+                ball.position.y = Random.Range(2, Width - 2);
+            }
+        }
     }
 
-
+    //Check that newly spawned balls doesn't spawn on player
     private void CheckSpawn(Ball ball, Player player)
     {
         Vector2 tmpPVector = player.GetPosition();

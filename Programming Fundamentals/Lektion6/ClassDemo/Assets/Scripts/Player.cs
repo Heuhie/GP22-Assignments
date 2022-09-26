@@ -35,17 +35,19 @@ public class Player : ProcessingLite.GP21
         Circle(circlePosX, circlePosY, size);
     }
 
-    public Vector2 GetPosition()
-    {
-        return position;
-    }
-
+    //Get player input and normalize vector
     public void GetInput()
     {
         //get input and normalize vector
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
         inputVector = new Vector3(xInput, yInput).normalized;
+    }
+
+    //Getting player position
+    public Vector2 GetPosition()
+    {
+        return position;
     }
 
     public void UpdateMovement()
@@ -67,13 +69,14 @@ public class Player : ProcessingLite.GP21
         position = CheckBoundsCircle(position);
     }
 
+    //Draw shapes
     public void DrawPlayer()
     {
-        //Draw shapes
         Fill(0, 255, 0);
         Circle(position.x, position.y, size);
     }
 
+    //Calculates velocity
     void AccelerationMovement()
     {
         if(isGravityActive)
@@ -84,6 +87,7 @@ public class Player : ProcessingLite.GP21
         velocity += inputVector * speed * acceleration * Time.deltaTime;
     }
 
+    //Calculates deacceleration
     void Drag()
     {
         if (isGravityActive)
@@ -96,6 +100,7 @@ public class Player : ProcessingLite.GP21
         velocity -= velocity * drag * Time.deltaTime;
     }
 
+    //Bool for activating/deactivating gravity
     public void Gravity()
     {
         if (Input.GetKeyDown(KeyCode.G))
@@ -104,7 +109,8 @@ public class Player : ProcessingLite.GP21
         }
     }
 
-
+    //Check that player is within screen bounds
+    //and what to do when not
     Vector3 CheckBoundsCircle(Vector3 shapePosition)
     {
         if (shapePosition.x - size / 2 > Width)
@@ -128,6 +134,7 @@ public class Player : ProcessingLite.GP21
         return new Vector3(shapePosition.x, shapePosition.y);
     }
 
+    //Check for player collision with balls
     public bool PlayerCollision(Player player, Ball[] balls)
     {
         bool isCollision = false;
