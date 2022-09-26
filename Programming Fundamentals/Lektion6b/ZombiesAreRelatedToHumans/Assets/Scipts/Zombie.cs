@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Zombie : Character
 {
+    //Constructs a badass evil zombie
     public Zombie()
     {
         r = 51;

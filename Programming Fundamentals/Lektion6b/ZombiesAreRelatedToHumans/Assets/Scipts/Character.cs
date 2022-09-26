@@ -15,7 +15,7 @@ public class Character : ProcessingLite.GP21
     public int r, g, b;
 
 
-    // Start is called before the first frame update
+    // Character constructor
     public Character()
     {
         r = 255;
@@ -26,17 +26,20 @@ public class Character : ProcessingLite.GP21
         velocity = velocity.normalized;
     }
 
+    //Updates character movement
     public void UpdateCharacterMovement()
     {
         position += velocity * speed * Time.deltaTime;
     }
 
+    //Draws the character at given position
     public void DrawCharacter()
     {
         Fill(r, g, b);
         Circle(position.x, position.y, size);
     }
 
+    //Checking if character within bounds or not
     public void CheckBounds()
     {
         if (position.x - size / 2 > Width)
@@ -64,8 +67,12 @@ public class Character : ProcessingLite.GP21
         }
     }
 
-    public void CheckCharacterCollision(Character zombie, Character[] characterList, int index)
+    //Checking if zombies collides with humans
+    //if so humans are transformed to zombies
+    public bool CheckCharacterCollision(Character zombie, Character[] characterList, int index)
     {
+        bool hasCollided = false;
+
         for (int i = index; i < characterList.Length; i++)
         {
             float maxDistance = zombie.size/2 + characterList[i].size/2;
@@ -75,11 +82,11 @@ public class Character : ProcessingLite.GP21
 
                 if (Mathf.Abs(zombie.position.x - characterList[i].position.x) > maxDistance || Mathf.Abs(zombie.position.y - characterList[i].position.y) > maxDistance)
                 {
-                    return;
+                    hasCollided = false;
                 }
                 else if (Vector2.Distance(zombie.position, characterList[i].position) > maxDistance)
                 {
-                    return;
+                    hasCollided = false;
                 }
                 else
                 {
@@ -87,10 +94,11 @@ public class Character : ProcessingLite.GP21
                     Vector2 tmpPosition = characterList[i].position;
                     characterList[i] = new Zombie();
                     characterList[i].position = tmpPosition;
-                    return;
+                    hasCollided = true;
+                    break;
                 }
-            }
-            return;
+            }  
         }
+        return hasCollided;
     }
 }

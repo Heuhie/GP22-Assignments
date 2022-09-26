@@ -34,8 +34,8 @@ public class ClassDemo : ProcessingLite.GP21
             player.DrawPlayer();
             player.Gravity();
             
-            if (player.PlayerCollision(player, balls))
-                gameOver = !gameOver;
+            //if (player.PlayerCollision(player, balls))
+            //    gameOver = !gameOver;
 
             //Loops through all balls, update, draw, checkcollision
             for (int i = 0; i < balls.Length; i++)

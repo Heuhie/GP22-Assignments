@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Human : Character
 {
+    //Constructs zombiefood
     public Human()
     {
         r = 255;

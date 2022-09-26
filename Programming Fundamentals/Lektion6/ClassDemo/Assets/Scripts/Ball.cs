@@ -79,7 +79,7 @@ public class Ball : ProcessingLite.GP21
     }
 
     //Check for collisions with other shapes
-    public void CheckCollision(Ball ball1, Ball[] ballz, int index)
+    public bool CheckCollision(Ball ball1, Ball[] ballz, int index)
     {
         bool isCollision = false;
         for (int i = index + 1; i < ballz.Length; i++)
@@ -89,7 +89,7 @@ public class Ball : ProcessingLite.GP21
 
             if (Mathf.Abs(ball1.position.x - ball2.position.x) > maxDistance || Mathf.Abs(ball1.position.y - ball2.position.y) > maxDistance)
             {
-                return;
+                isCollision = false;
             }
             else if (Vector2.Distance(ball1.position, ball2.position) > maxDistance)
             {
@@ -101,10 +101,11 @@ public class Ball : ProcessingLite.GP21
                 ball1.velocity *= -1f;
                 ball2.velocity *= -1f;
 
-                return;
+                isCollision = true;
+                break;
             }
            
         }
-        return;
+        return isCollision;
     }
 }
