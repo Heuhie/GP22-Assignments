@@ -7,6 +7,7 @@ public class CharacterManager : ProcessingLite.GP21
     public Character[] characterList;
     public int r, g, b;
     public bool gameOver;
+    public float extinctionTime;
 
 
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class CharacterManager : ProcessingLite.GP21
             Background(255, 0, 0);
             TextSize(30);
             Text("GaMeOVer", Width/2, Height/2);
+            Text("It took the Zombies " + extinctionTime + " seconds to rule the world", Width / 2, Height / 2 - 3);
         }
     }
 
@@ -89,6 +91,7 @@ public class CharacterManager : ProcessingLite.GP21
     {
         if(ZombieCount() == characterList.Length)
         {
+            extinctionTime = Time.realtimeSinceStartup;
             gameOver = true;
         }
     }
