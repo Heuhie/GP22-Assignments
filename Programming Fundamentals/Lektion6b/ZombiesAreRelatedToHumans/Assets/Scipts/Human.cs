@@ -7,9 +7,9 @@ public class Human : Character
     //Constructs zombiefood
     public Human()
     {
-        r = 255;
-        g = 204;
-        b = 204;
+        base.r = 255;
+        base.g = 204;
+        base.b = 204;
 
         characterType = "Human";
     }

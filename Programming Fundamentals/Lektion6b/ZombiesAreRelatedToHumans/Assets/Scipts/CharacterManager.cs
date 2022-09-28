@@ -64,7 +64,7 @@ public class CharacterManager : ProcessingLite.GP21
 
             if(characterList[i].characterType == "Zombie")
             {
-                characterList[i].CheckCharacterCollision(characterList[i], characterList, i +1);
+                characterList[i].CheckCharacterCollision(characterList[i], characterList);
             }
         }
     }

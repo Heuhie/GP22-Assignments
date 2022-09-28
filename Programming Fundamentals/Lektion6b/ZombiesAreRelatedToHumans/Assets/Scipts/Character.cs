@@ -69,11 +69,11 @@ public class Character : ProcessingLite.GP21
 
     //Checking if zombies collides with humans
     //if so humans are transformed to zombies
-    public bool CheckCharacterCollision(Character zombie, Character[] characterList, int index)
+    public bool CheckCharacterCollision(Character zombie, Character[] characterList)
     {
         bool hasCollided = false;
 
-        for (int i = index; i < characterList.Length; i++)
+        for (int i = 0; i < characterList.Length; i++)
         {
             float maxDistance = zombie.size/2 + characterList[i].size/2;
 
