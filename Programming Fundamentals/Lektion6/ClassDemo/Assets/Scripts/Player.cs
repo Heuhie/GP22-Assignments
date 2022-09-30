@@ -87,7 +87,7 @@ public class Player : ProcessingLite.GP21
         velocity += inputVector * speed * acceleration * Time.deltaTime;
     }
 
-    //Calculates deacceleration
+    //Calculates deceleration
     void Drag()
     {
         if (isGravityActive)

@@ -4,23 +4,35 @@ using UnityEngine;
 
 public class Name : ProcessingLite.GP21
 {
-    public float hx, hy, ex, ey, nx, ny, rx, ry, ix, iy, kx, ky;
+    private float hx, hy, ex, ey, nx, ny, rx, ry, ix, iy, kx, ky;
+
+    //x and y for the whole text
     public float x = 0;
     public float y = -6;
-    public float speed = 1f;
+
     float timer = 0;
     float colorToggleTimer = 5f;
-
-    private void Start()
-    {
-
-    }
 
     void Update()
     {
         timer += Time.deltaTime;
 
-        if(timer >= colorToggleTimer)
+        Background(0);
+
+        //Toggle text color
+        ColorToggle();
+
+        LetterH(x, y);
+        LetterE(x, y);
+        LetterN(x, y);
+        LetterR(x, y);
+        LetterI(x, y);
+        LetterK(x, y);
+    }
+
+    void ColorToggle()
+    {
+        if (timer >= colorToggleTimer)
         {
             int r = Random.Range(0, 255);
             int g = Random.Range(0, 255);
@@ -28,29 +40,6 @@ public class Name : ProcessingLite.GP21
             Stroke(r, g, b);
             timer = 0f;
         }
-
-        Background(0);
-        //x += speed * Time.deltaTime;
-        //y += speed * Time.deltaTime;
-        //if (y > Height || x > Width)
-        //{
-        //    Stroke(Random.Range(0, 255), Random.Range(0, 255), Random.Range(0, 255));
-        //    y = -6;
-        //    x = -1;
-        //}
-
-        //if(y < 0 || x < 0)
-        //{
-        //    x = Width;
-        //    y = Height;
-        //}
-
-        LetterH(hx, hy);
-        LetterE(ex, ey);
-        LetterN(nx, ny);
-        LetterR(rx, ry);
-        LetterI(ix, iy);
-        LetterK(kx, ky);
     }
 
     public void LetterH(float x, float y)

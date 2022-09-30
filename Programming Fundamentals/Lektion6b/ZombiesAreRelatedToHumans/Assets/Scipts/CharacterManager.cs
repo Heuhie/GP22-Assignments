@@ -31,6 +31,7 @@ public class CharacterManager : ProcessingLite.GP21
         {
             Background(255, 0, 0);
             TextSize(30);
+            Fill(0, 255, 0);
             Text("GaMeOVer", Width/2, Height/2);
             Text("It took the Zombies " + extinctionTime + " seconds to rule the world", Width / 2, Height / 2 - 3);
         }
@@ -85,7 +86,7 @@ public class CharacterManager : ProcessingLite.GP21
     }
 
     //Checking if there is as many zombies as
-    //there is characters in the list, if so
+    //there is characters in the array, if so
     //sets gameOver to true
     void CheckGameOver()
     {

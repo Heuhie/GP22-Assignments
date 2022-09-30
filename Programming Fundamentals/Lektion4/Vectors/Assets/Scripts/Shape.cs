@@ -16,9 +16,10 @@ public class Shape : ProcessingLite.GP21
     Vector3 circleMovement;
     [SerializeField]
     float speedLimit = 4f;
-    Vector3 velocity;
     [SerializeField]
-    float speed;
+    Vector3 velocity;
+    
+    public float speed;
     public bool left, right, up ,down;
     public bool goingUp;
 
@@ -41,14 +42,9 @@ public class Shape : ProcessingLite.GP21
         circlePos += velocity * speed * Time.deltaTime;
      
         KeepInBounds();
-
         OnMouseRelease();
-        
         Circle(circlePos.x, circlePos.y, circleDiameter);
-        //Debug.Log(circlePos);
         DrawLineOnMouseDown();
-        //CircleMovement();
-
     }
 
     void UpdateOnMouseClick()
@@ -66,8 +62,7 @@ public class Shape : ProcessingLite.GP21
         {
             lineEndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Line(circlePos.x, circlePos.y, lineEndPos.x, lineEndPos.y);
-            //speed = velocity.magnitude;
-
+     
             //for moving circle while drawing line
             #region
             //velocity = lineEndPos - circlePos;
@@ -109,23 +104,5 @@ public class Shape : ProcessingLite.GP21
             circlePos.y = Mathf.Clamp(circlePos.y, 0, Height);
             velocity.y = -velocity.y;
         }
-        //if (circlePos.x > Width && !left)
-        //{
-        //    right = false;
-        //    left = true;
-        //    velocity.x = -velocity.x;
-        //}
-        //if (circlePos.y < 0 && !down)
-        //{
-        //    down = true;
-        //    up = false;
-        //    velocity.y = -velocity.y;
-        //}
-        //if (circlePos.y > Height && !up)
-        //{
-        //    down = false;
-        //    up = true;
-        //    velocity.y = -velocity.y;
-        //}
     }
 }

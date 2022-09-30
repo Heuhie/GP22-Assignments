@@ -135,16 +135,16 @@ public class Movement : ProcessingLite.GP21
 
     Vector3 CheckBoundsCircle(Vector3 shapePosition)
     {
-        if (shapePosition.x - diameter/2 > Width)
-            shapePosition.x = 0 - diameter/2;
+        if (shapePosition.x - diameter / 2 > Width)
+            shapePosition.x = 0 + diameter/2;
 
-        if (shapePosition.x + diameter/2 < 0)
-            shapePosition.x = Width + diameter/2;
+        if (shapePosition.x + diameter / 2 < 0)
+            shapePosition.x = Width - diameter/2;
 
-        if (shapePosition.y > Height || shapePosition.y < 0)
+        if (shapePosition.y + diameter/2 > Height || shapePosition.y - diameter/2 < 0)
         {
             velocity.y *= -1;
-            shapePosition.y = Mathf.Clamp(shapePosition.y, 0, Height);
+            shapePosition.y = Mathf.Clamp(shapePosition.y, 0 + diameter / 2, Height - diameter / 2);
         }
 
         return new Vector3(shapePosition.x, shapePosition.y);
@@ -153,13 +153,13 @@ public class Movement : ProcessingLite.GP21
     Vector3 CheckBoundsSquare(Vector3 shapePosition)
     {
         if (shapePosition.x - diameter/2 > Width)
-            shapePosition.x = 0;
+            shapePosition.x = 0 + diameter/2;
 
         if (shapePosition.x + diameter/2 < 0)
-            shapePosition.x = Width;
+            shapePosition.x = Width - diameter/2;
 
         if (shapePosition.y + diameter/2 > Height || shapePosition.y - diameter/2 < 0) 
-            shapePosition.y = Mathf.Clamp(shapePosition.y, 0, Height);
+            shapePosition.y = Mathf.Clamp(shapePosition.y, 0 + diameter/2, Height - diameter/2);
 
         return new Vector3(shapePosition.x, shapePosition.y);
     }

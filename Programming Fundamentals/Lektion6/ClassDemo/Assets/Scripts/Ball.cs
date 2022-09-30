@@ -79,10 +79,10 @@ public class Ball : ProcessingLite.GP21
     }
 
     //Check for collisions with other shapes
-    public bool CheckCollision(Ball ball1, Ball[] ballz, int index)
+    public bool CheckCollision(Ball ball1, Ball[] ballz)
     {
         bool isCollision = false;
-        for (int i = index + 1; i < ballz.Length; i++)
+        for (int i = 0; i < ballz.Length; i++)
         {
             Ball ball2 = ballz[i];
             float maxDistance = ball1.size / 2 + ball2.size / 2;

@@ -18,20 +18,8 @@ public class ScanLines : ProcessingLite.GP21
     void Update()
     {
         yMovement += speed * Time.deltaTime;
-        Debug.Log(speed * Time.deltaTime);
         Background(0, 166, 0);
         DrawScanLines();
-        //Drawline();
-    }
-
-    void Drawline()
-    {
-        Line(0, yMovement, Width, yMovement);
-        if(yMovement > Height)
-        {
-            yMovement = 0f;
-        }
-
     }
 
     void DrawScanLines()

@@ -9,12 +9,9 @@ public class ClassDemo : ProcessingLite.GP21
     public int r, g, b;
     public int numberOfBalls;
 
-    private Vector2 startPos;
     private Ball[] balls;
     private Player player;
     private bool gameOver;
-    private float timer = 3;
-    private int spawnIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -33,9 +30,9 @@ public class ClassDemo : ProcessingLite.GP21
             player.UpdateMovement();
             player.DrawPlayer();
             player.Gravity();
-            
-            //if (player.PlayerCollision(player, balls))
-            //    gameOver = !gameOver;
+
+            if (player.PlayerCollision(player, balls))
+                gameOver = !gameOver;
 
             //Loops through all balls, update, draw, checkcollision
             for (int i = 0; i < balls.Length; i++)
@@ -43,7 +40,7 @@ public class ClassDemo : ProcessingLite.GP21
                 balls[i].UpdatePosition();
                 balls[i].DrawBall();
                 balls[i].CheckBounds();
-                balls[i].CheckCollision(balls[i], balls, i);
+                balls[i].CheckCollision(balls[i], balls);
             }
         }
 
@@ -83,6 +80,7 @@ public class ClassDemo : ProcessingLite.GP21
         }
     }
 
+
     //Not working correctly
     //Check that newly spawned balls doesn't spawn on other balls
     //index indicates where to start in the array
@@ -102,6 +100,7 @@ public class ClassDemo : ProcessingLite.GP21
             }
         }
     }
+
 
     //Check that newly spawned balls doesn't spawn on player
     private void CheckSpawn(Ball ball, Player player)
