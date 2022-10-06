@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
         movement.y = rb.velocity.y;
         animator.SetFloat("speed", Mathf.Abs(movement.x));
-        Debug.Log(movement.x);
+        //Debug.Log(movement.x);
         rb.velocity = movement;
         FacingDirection();
     }
@@ -55,17 +55,22 @@ public class PlayerMovement : MonoBehaviour
     void CheckIfGrounded()
     {
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - playerBoundsY), Vector2.down, 1f);
+        hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - playerBoundsY), Vector2.down, 0.2f);
 
         if (hit.collider != null && hit.collider.CompareTag("Ground"))
         {
-            Debug.Log(hit.collider.gameObject.name);
+            //Debug.Log(hit.collider.gameObject.name);
             isGrounded = true;
+            animator.SetBool("jump", false);
         }
         else
+        {
             isGrounded = false;
+            animator.SetBool("jump", true);
+        }
 
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - playerBoundsY), Vector2.down, Color.cyan);
+        Debug.Log(animator.GetBool("jump"));
     }
 
     //private void OnCollisionEnter2D(Collision2D other)
@@ -81,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = false;
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        animator.SetBool("jump", true);
        
     }
 
@@ -120,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
         {
             score += 10;
             Destroy(other.gameObject);
-            Debug.Log("collided");
+            //Debug.Log("collided");
         }
     }
 
