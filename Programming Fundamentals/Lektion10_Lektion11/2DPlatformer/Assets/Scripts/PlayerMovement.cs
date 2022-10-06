@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     public int score;
 
     float horizontal;
-    float vertical;
     Vector2 movement;
     Rigidbody2D rb;
     Animator animator;
@@ -32,17 +31,13 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
-
-
         movement.x = horizontal * speed;
         //CheckFalling();
-
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             Jump();
         }
-
 
         movement.y = rb.velocity.y;
         animator.SetFloat("speed", Mathf.Abs(movement.x));
@@ -56,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         CheckIfGrounded();
     }
 
+    //Raycast for groundcheck
     void CheckIfGrounded()
     {
         RaycastHit2D hit;
@@ -88,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
        
     }
 
+    //Checks if player is falling, if so
+    //disables jump
     void CheckFalling()
     {
         if (rb.velocity.y < -1)
@@ -96,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //Change direction the character is looking
+    //based on movement direction
     void FacingDirection()
     {
         if(horizontal < 0 && !facingLeft)
@@ -111,6 +111,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    //Check if character collides with a pickup
+    //if so destroys the pickup and increments score
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("PickUp"))

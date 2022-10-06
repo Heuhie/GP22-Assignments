@@ -13,16 +13,12 @@ public class InGameUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI uiScore;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
         score = player.score;
         uiScore.text = "Score: " + score;
+       
     }
 }
