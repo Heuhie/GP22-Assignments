@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TranslateMovement : MonoBehaviour
 {
-    public float speed = 0;
+    public float speed = 5;
 
 
     // Start is called before the first frame update
