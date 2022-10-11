@@ -11,11 +11,14 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask ground;
     public bool facingLeft;
     public int score;
+    public string horizontalMovement;
+    public string jumpButton;
 
     float horizontal;
     Vector2 movement;
     Rigidbody2D rb;
     Animator animator;
+    AudioSource jump;
 
     
 
@@ -25,16 +28,17 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerBoundsY = GetComponent<BoxCollider2D>().bounds.extents.y + 0.1f;
+        jump = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
+        horizontal = Input.GetAxis(horizontalMovement);
         movement.x = horizontal * speed;
         //CheckFalling();
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetButtonDown(jumpButton) && isGrounded)
         {
             Jump();
         }
@@ -87,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
         animator.SetBool("jump", true);
-       
+        jump.Play();  
     }
 
     //Checks if player is falling, if so
@@ -106,13 +110,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if(horizontal < 0 && !facingLeft)
         {
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            transform.eulerAngles = new Vector3(0, 180, 0);
             facingLeft = true;
         }
         
         if(horizontal > 0 && facingLeft)
         {
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            transform.eulerAngles = new Vector3(0, 0, 0);
             facingLeft = false;
         }
     }
