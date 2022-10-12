@@ -27,11 +27,11 @@ public class CloudHandler : MonoBehaviour
         clouds.Add(cloud);
         cloud = Instantiate(cloud);
         clouds.Add(cloud);
-        clouds[0].GetComponent<Cloud>().StartCloudPosition(-13.5f, 2f);
+        clouds[0].GetComponent<Cloud>().StartCloudPosition(-13.5f, -1f);
         clouds[1].GetComponent<Cloud>().StartCloudPosition(-10f, 3.5f);
         clouds[2].GetComponent<Cloud>().StartCloudPosition(-5f, 5f);
         clouds[3].GetComponent<Cloud>().StartCloudPosition(-1f, 3.3f);
-        clouds[4].GetComponent<Cloud>().StartCloudPosition(1.5f, 3f);
+        clouds[4].GetComponent<Cloud>().StartCloudPosition(1.5f, 0);
         clouds[5].GetComponent<Cloud>().StartCloudPosition(4f, 2f);
         clouds[6].GetComponent<Cloud>().StartCloudPosition(5.6f, 3f);
     }

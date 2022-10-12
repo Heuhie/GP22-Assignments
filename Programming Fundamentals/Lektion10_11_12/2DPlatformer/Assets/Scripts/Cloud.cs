@@ -29,7 +29,7 @@ public class Cloud : MonoBehaviour
 
     public void SpawnPosition()
     {
-        positionY = Random.Range(0f, 8f);
+        positionY = Random.Range(-2f, 8f);
         transform.position = new Vector3(-25f, positionY);
     }
 
@@ -38,6 +38,8 @@ public class Cloud : MonoBehaviour
         int layer = Random.Range(-1, 2);
         if (layer == 0)
             layer = -1;
+        if (layer == 1)
+            layer = 2;
 
         zLayer.sortingOrder = layer;
     }
