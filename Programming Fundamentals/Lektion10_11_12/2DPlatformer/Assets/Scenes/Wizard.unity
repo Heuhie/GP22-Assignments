@@ -1232,7 +1232,7 @@ Rigidbody2D:
   m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3.5
   m_Material: {fileID: 6200000, guid: 0d696b8fcf91cfa45908a13fd83836c1, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1318,8 +1318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0268af74dc6b2b44965817fd4bc4d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  jumpForce: 30
+  speed: 6
+  jumpForce: 60
   isGrounded: 0
   playerBoundsY: 0
   ground:
@@ -12945,12 +12945,12 @@ GameObject:
   - component: {fileID: 2096928220}
   - component: {fileID: 2096928219}
   - component: {fileID: 2096928218}
+  - component: {fileID: 2096928221}
   - component: {fileID: 2096928216}
   - component: {fileID: 2096928215}
   - component: {fileID: 2096928214}
   - component: {fileID: 2096928213}
   - component: {fileID: 2096928212}
-  - component: {fileID: 2096928221}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -13228,7 +13228,7 @@ Rigidbody2D:
   m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3.5
   m_Material: {fileID: 6200000, guid: 0d696b8fcf91cfa45908a13fd83836c1, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -13314,8 +13314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0268af74dc6b2b44965817fd4bc4d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpForce: 30
+  speed: 6
+  jumpForce: 60
   isGrounded: 0
   playerBoundsY: 0
   ground:
