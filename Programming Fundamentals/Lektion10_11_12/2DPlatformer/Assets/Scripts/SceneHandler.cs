@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+    AudioSource theWizard;
+
     // Start is called before the first frame update
     void Start()
     {
+        theWizard = GetComponent<AudioSource>();
         DontDestroyOnLoad(this);
+        theWizard.Play();
     }
 
     public void StartGame()
