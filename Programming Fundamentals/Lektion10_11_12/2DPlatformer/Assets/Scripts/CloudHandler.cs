@@ -7,12 +7,33 @@ public class CloudHandler : MonoBehaviour
     public float timer = 0;
     public float spawnInterval = 5f;
     public List<GameObject> clouds;
-    public int index;
+    public int index = 0;
     public GameObject cloud;
     // Start is called before the first frame update
     void Start()
     {
         clouds = new List<GameObject>();
+        cloud = Instantiate(cloud);
+        clouds.Add(cloud);
+        cloud = Instantiate(cloud);
+        clouds.Add(cloud);
+        cloud = Instantiate(cloud);
+        clouds.Add(cloud);
+        cloud = Instantiate(cloud);
+        clouds.Add(cloud);
+        cloud = Instantiate(cloud);
+        clouds.Add(cloud);
+        cloud = Instantiate(cloud);
+        clouds.Add(cloud);
+        cloud = Instantiate(cloud);
+        clouds.Add(cloud);
+        clouds[0].GetComponent<Cloud>().StartCloudPosition(-13.5f, 2f);
+        clouds[1].GetComponent<Cloud>().StartCloudPosition(-10f, 3.5f);
+        clouds[2].GetComponent<Cloud>().StartCloudPosition(-5f, 5f);
+        clouds[3].GetComponent<Cloud>().StartCloudPosition(-1f, 3.3f);
+        clouds[4].GetComponent<Cloud>().StartCloudPosition(1.5f, 3f);
+        clouds[5].GetComponent<Cloud>().StartCloudPosition(4f, 2f);
+        clouds[6].GetComponent<Cloud>().StartCloudPosition(5.6f, 3f);
     }
 
     // Update is called once per frame
@@ -28,6 +49,7 @@ public class CloudHandler : MonoBehaviour
         if (timer >= spawnInterval)
         {
             cloud = Instantiate(cloud);
+            cloud.GetComponent<Cloud>().SpawnPosition();
             clouds.Add(cloud);
             index++;
             timer = 0;
@@ -44,6 +66,7 @@ public class CloudHandler : MonoBehaviour
                 Destroy(cloud);
                 clouds.Remove(cloud);
                 index--;
+                return;
             }
         }
     }
