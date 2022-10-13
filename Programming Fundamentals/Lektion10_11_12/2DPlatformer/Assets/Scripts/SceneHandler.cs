@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+    [SerializeField]
+    private Animator animator;
+
     AudioSource theWizard;
 
     // Start is called before the first frame update
@@ -18,6 +21,16 @@ public class SceneHandler : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Wizard");
+    }
+
+    public void HoverButton()
+    {
+        animator.Play("HoveringButton");        
+    }
+
+    public void ExitHoverButton()
+    {
+        animator.Play("Stop");
     }
 
 
