@@ -367,6 +367,7 @@ GameObject:
   - component: {fileID: 823251519}
   - component: {fileID: 823251521}
   - component: {fileID: 823251520}
+  - component: {fileID: 823251522}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -392,7 +393,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.8919373, y: 120.62511}
+  m_AnchoredPosition: {x: 2.8919373, y: 165}
   m_SizeDelta: {x: 110.9844, y: 31.8963}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &823251520
@@ -402,7 +403,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823251518}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -433,6 +434,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823251518}
   m_CullTransparentMesh: 1
+--- !u!95 &823251522
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823251518}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae1ffdd13c3bfad4fbdbf47d7ac52fed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &936200647
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,8 +489,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.5, y: 0}
-  m_SizeDelta: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -0.5, y: -0}
+  m_SizeDelta: {x: 11.1027, y: -21.3552}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &936200649
 MonoBehaviour:
@@ -491,7 +512,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Disillusioned Wizard
+  m_text: The Wizard
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -518,10 +539,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 24
+  m_fontSize: 31.76
+  m_fontSizeBase: 31.76
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -579,6 +600,7 @@ GameObject:
   - component: {fileID: 1086982774}
   - component: {fileID: 1086982776}
   - component: {fileID: 1086982775}
+  - component: {fileID: 1086982777}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -645,6 +667,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086982773}
   m_CullTransparentMesh: 1
+--- !u!95 &1086982777
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086982773}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e1f153ebe3d88d469e33e0b1772e0cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1560621304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,6 +1060,7 @@ GameObject:
   - component: {fileID: 1877236723}
   - component: {fileID: 1877236722}
   - component: {fileID: 1877236726}
+  - component: {fileID: 1877236727}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1120,3 +1163,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8501bdc5600014e8cb53d473c3c528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1877236727
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877236720}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2df27f14a2522f6429751c492ef4f3bc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
