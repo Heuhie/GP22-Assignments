@@ -19,7 +19,7 @@ public class FireBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Destroy(gameObject, 1.4f);
+        Destroy(gameObject, 3f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -28,12 +28,13 @@ public class FireBall : MonoBehaviour
         {
             //Debug.Log(collision.gameObject.name);
             audioSource.PlayOneShot(hit);
-            Destroy(gameObject, hit.length);
+            //Destroy(gameObject, hit.length);
         }
         
         if(collision.gameObject.tag == "Player" && collision.gameObject.name != ignorePlayerName)
         {
             collision.gameObject.GetComponent<PlayerStats>().TakeDamage();
+            Destroy(gameObject, hit.length);
 
             if (collision.gameObject.GetComponent<PlayerStats>().isDead == true)
             {

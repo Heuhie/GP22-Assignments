@@ -11,20 +11,20 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask ground;
     public bool facingLeft;
     public int score;
-    public string horizontalMovement;
-    public string jumpButton;
 
     float horizontal;
     Vector2 movement;
     Rigidbody2D rb;
     Animator animator;
     AudioSource jump;
+    InputHandler input;
 
     
 
     // Start is called before the first frame update
     void Start()
     {
+        input = GetComponent<InputHandler>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerBoundsY = GetComponent<CapsuleCollider2D>().bounds.extents.y + 0.1f;
@@ -34,11 +34,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxis(horizontalMovement);
+        horizontal = input.horizontal;
         movement.x = horizontal * speed;
         //CheckFalling();
 
-        if (Input.GetButtonDown(jumpButton) && isGrounded)
+        if (Input.GetButtonDown(input.jumpButton) && isGrounded)
         {
             Jump();
         }

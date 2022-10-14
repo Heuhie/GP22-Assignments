@@ -13,10 +13,11 @@ GameObject:
   - component: {fileID: 5002286105766762799}
   - component: {fileID: 5002286105766762792}
   - component: {fileID: 5002286105766762797}
-  - component: {fileID: 5002286105766762786}
   - component: {fileID: 5002286105766762787}
   - component: {fileID: 5002286105766762784}
   - component: {fileID: 5002286105766762785}
+  - component: {fileID: 1699554396}
+  - component: {fileID: 1699554386}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -156,32 +157,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &5002286105766762786
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5002286105766762790}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.99049604, y: 2.668157}
-  m_EdgeRadius: 0
 --- !u!82 &5002286105766762787
 AudioSource:
   m_ObjectHideFlags: 0
@@ -391,6 +366,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!70 &1699554396
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5002286105766762790}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.5037223, y: 2.776249}
+  m_Direction: 0
+--- !u!114 &1699554386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5002286105766762790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea84dcba2c5303a4fb9f8d026537c9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: 50
+  isDead: 0
 --- !u!1 &5002286106477178276
 GameObject:
   m_ObjectHideFlags: 0
