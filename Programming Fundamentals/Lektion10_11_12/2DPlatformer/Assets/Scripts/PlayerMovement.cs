@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerBoundsY = GetComponent<BoxCollider2D>().bounds.extents.y + 0.1f;
+        playerBoundsY = GetComponent<CapsuleCollider2D>().bounds.extents.y + 0.1f;
         jump = GetComponent<AudioSource>();
     }
 

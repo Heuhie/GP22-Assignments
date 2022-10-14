@@ -29,7 +29,7 @@ public class Cloud : MonoBehaviour
 
     public void SpawnPosition()
     {
-        positionY = Random.Range(-2f, 8f);
+        positionY = Random.Range(-3f, 8f);
         transform.position = new Vector3(-25f, positionY);
     }
 

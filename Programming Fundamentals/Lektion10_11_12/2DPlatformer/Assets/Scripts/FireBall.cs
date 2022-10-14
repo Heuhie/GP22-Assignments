@@ -30,5 +30,21 @@ public class FireBall : MonoBehaviour
             audioSource.PlayOneShot(hit);
             Destroy(gameObject, hit.length);
         }
+        
+        if(collision.gameObject.tag == "Player" && collision.gameObject.name != ignorePlayerName)
+        {
+            collision.gameObject.GetComponent<PlayerStats>().TakeDamage();
+
+            if (collision.gameObject.GetComponent<PlayerStats>().isDead == true)
+            {
+                Debug.Log(gameObject.GetComponent<Rigidbody2D>().velocity);
+                Debug.Log("Gets to add force");
+                collision.gameObject.GetComponent<PlayerMovement>().enabled = false;
+                collision.gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(gameObject.GetComponent<Rigidbody2D>().velocity * 10, gameObject.transform.position);
+                Debug.Log(gameObject.GetComponent<Rigidbody2D>().velocity * (new Vector2(1, 1) * 100));
+            }
+        }
+
     }
 }
