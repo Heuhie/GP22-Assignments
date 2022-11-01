@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private bool inMenu;
     [SerializeField]
     private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject gameOverMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -39,5 +41,10 @@ public class GameManager : MonoBehaviour
             }
         }
             
+    }
+
+    public void GameOver()
+    {
+        gameOverMenu.SetActive(true);
     }
 }
