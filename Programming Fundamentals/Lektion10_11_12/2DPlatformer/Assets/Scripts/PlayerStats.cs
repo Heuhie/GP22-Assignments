@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
     public PickupManager pickUpManager;
+    public Slider healthbar;
     public int playerHealth = 50;
     public bool isDead;
     public PowerUpType playerPowerUp;
@@ -13,11 +15,17 @@ public class PlayerStats : MonoBehaviour
     public bool hasPowerUp;
     public bool isPowerUpTriggered;
 
+    public float maxHealth;
+
     // Start is called before the first frame update
     private void Start()
     {
         pickUpManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<PickupManager>();
         pickUpManager.currentPowerUp = PowerUpType.Normal;
+        healthbar.maxValue = playerHealth;
+        healthbar.value = playerHealth;
+        maxHealth = playerHealth;
+
     }
 
     private void Update()
@@ -62,9 +70,11 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage()
     {
         playerHealth -= 10;
+        healthbar.value -= 10;
         if(playerHealth <= 0)
         {
             isDead = true;
+            FindObjectOfType<GameManager>().GetComponent<GameManager>().GameOver();
         }
     }
 }

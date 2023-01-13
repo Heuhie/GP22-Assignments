@@ -40,11 +40,11 @@ public class PickupManager : MonoBehaviour
 
     public void SpeedUp(GameObject player)
     {
-        player.GetComponent<PlayerMovement>().speed *= 2;
+        player.GetComponent<PlayerMovement>().maxSpeed *= 2;
     }
 
     public void NormalSpeed(GameObject player)
     {
-        player.GetComponent<PlayerMovement>().speed /= 2;
+        player.GetComponent<PlayerMovement>().maxSpeed /= 2;
     }
 }

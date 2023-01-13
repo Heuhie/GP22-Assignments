@@ -1899,24 +1899,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0268af74dc6b2b44965817fd4bc4d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &829017855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829017840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 527f20e0ba6dd45428b4af0486ab52f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontalInput: Horizontal
-  verticalInput: Vertical
-  jumpButton: Jump
-  horizontal: 0
-  vertical: 0
-  inputVector: {x: 0, y: 0}
 --- !u!1 &919231022
 GameObject:
   m_ObjectHideFlags: 0
@@ -2233,8 +2215,8 @@ GameObject:
   - component: {fileID: 1017848893}
   - component: {fileID: 1017848892}
   m_Layer: 5
-  m_Name: GamOverScreen
-  m_TagString: Untagged
+  m_Name: GameOverScreen
+  m_TagString: GameOverScreen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11615,29 +11597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a24dae115b14474694b0fb2cba6bf11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1137911945 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5002286105766762790, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
-  m_PrefabInstance: {fileID: 5002286105847205109}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1137911956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1137911945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 527f20e0ba6dd45428b4af0486ab52f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontalInput: Horizontal2
-  verticalInput: Vertical2
-  jumpButton: JumpP2
-  horizontal: 0
-  vertical: 0
-  inputVector: {x: 0, y: 0}
 --- !u!1 &1224779001
 GameObject:
   m_ObjectHideFlags: 0
@@ -12127,7 +12086,7 @@ MonoBehaviour:
   jump: {fileID: 0}
   inMenu: 1
   pauseMenu: {fileID: 234136895}
-  gameOverMenu: {fileID: 0}
+  gameOverMenu: {fileID: 1017848891}
 --- !u!4 &1349835492
 Transform:
   m_ObjectHideFlags: 0
@@ -13757,14 +13716,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 829017854, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
-      propertyPath: powerUpTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879483386751716881, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
-      propertyPath: fireRate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3879483386751716888, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
       propertyPath: m_Name
       value: Player1
@@ -13814,8 +13765,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3879483386751716893, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
-      propertyPath: jumpButton
-      value: Jump
+      propertyPath: acceleration
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879483386751716893, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
+      propertyPath: deceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879483386751716893, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
+      propertyPath: ground.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299144615861242545, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 6584184570158900500, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584184570158900500, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ce01f1524910354ca588e8b7b6fe40a, type: 3}
@@ -13826,13 +13797,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5002286105766762784, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
-      propertyPath: fireButton
-      value: FireP2
+    - target: {fileID: 2647839566974140280, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 3667918314954808863, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667918314954808863, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5002286105766762790, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
       propertyPath: m_Name
       value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002286105766762792, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
+      propertyPath: ground.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5002286105766762793, guid: aa9ba5bfa9bee284d9532b9cfacc21be, type: 3}
       propertyPath: m_RootOrder

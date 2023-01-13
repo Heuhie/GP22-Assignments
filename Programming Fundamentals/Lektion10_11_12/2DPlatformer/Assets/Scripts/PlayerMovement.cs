@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
+    [Range(0, 20)]
+    public float acceleration = 5f;
+    [Range(0, 20)]
+    public float deceleration = 5f;
+    [Range(0, 10)]
+    public float maxSpeed = 10;
+    [Range(0,50)]
     public float jumpForce = 2f;
     public bool isGrounded;
     public float playerBoundsY;
@@ -35,8 +41,19 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontal = input.horizontal;
-        movement.x = horizontal * speed;
+       
         //CheckFalling();
+
+        if(horizontal == 0 && rb.velocity.x != 0)
+        {
+            movement.x -= movement.x * deceleration * Time.deltaTime;
+        }
+        else
+        {
+            movement.x += horizontal * acceleration * Time.deltaTime;
+            movement.x = Mathf.Clamp(movement.x, -maxSpeed, maxSpeed);
+
+        }
 
         if (Input.GetButtonDown(input.jumpButton) && isGrounded)
         {
@@ -59,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckIfGrounded()
     {
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - playerBoundsY), Vector2.down, 0.2f);
+        hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - playerBoundsY), Vector2.down, 0.2f, ground);
 
         if (hit.collider != null && hit.collider.CompareTag("Ground"))
         {
