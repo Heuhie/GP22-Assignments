@@ -90,19 +90,6 @@ public class HighScoreBoard : ScoreObserver
     
     private void SaveScores(ScoreBoardSaveData scoreBoardSaveData)
     {
-
-        var db = FirebaseDatabase.DefaultInstance;
-        //var userId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
-        string jsson = JsonUtility.ToJson(scoreBoardSaveData, true);
-
-        db.RootReference.SetRawJsonValueAsync(jsson).ContinueWithOnMainThread(task =>
-        {
-            if (task.Exception != null)
-                Debug.LogWarning(task.Exception);
-            else
-                Debug.Log("DataTestWrite: Complete");
-        });
-
         using (StreamWriter stream = new StreamWriter(savePath))
         {
             string json = JsonUtility.ToJson(scoreBoardSaveData, true);
