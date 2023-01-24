@@ -4,7 +4,7 @@ using Firebase.Database;
 using Firebase.Extensions;
 
 
-public class FirebaseSaveData : MonoBehaviour
+public class FirebaseSaveData : IFarebaseSubject
 {
     private static FirebaseSaveData instance;
 
@@ -29,6 +29,12 @@ public class FirebaseSaveData : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
+       
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
@@ -39,35 +45,38 @@ public class FirebaseSaveData : MonoBehaviour
         });
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
-
     // Update is called once per frame
     public void SaveToFirebase(ScoreBoardSaveData scoreBoard)
     {
+        database = FirebaseDatabase.DefaultInstance;
         string json = JsonUtility.ToJson(scoreBoard);
-        database.RootReference.Child("HighScore").SetRawJsonValueAsync(json);
+        database.RootReference.Child("HighScore").SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
+        {
+            if (task.Exception != null)
+                Debug.LogError(task.Exception);
+            else
+                Debug.Log("Data saved");
+        });
+        Debug.Log(database.RootReference.Child("HighScore").SetRawJsonValueAsync(json));
     }
 
 
     public void LoadFromFirebase()
     {
+        database = FirebaseDatabase.DefaultInstance;
         database.RootReference.Child("HighScore").GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
             {
                 Debug.Log("runs error");
-                Debug.LogError(task.Exception);
             }
 
-            Debug.Log("Gets snap almost");
-            DataSnapshot snap = task.Result;
 
+            DataSnapshot snap = task.Result;
             scoreBoardSaveData = JsonUtility.FromJson<ScoreBoardSaveData>(snap.GetRawJsonValue());
-        });
+
+            DatabaseDataLoaded();   //notifies observer
+        }); 
     }
 
     public ScoreBoardSaveData GetLoadedScoreboard()

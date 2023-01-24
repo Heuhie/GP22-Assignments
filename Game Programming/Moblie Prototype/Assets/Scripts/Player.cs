@@ -60,10 +60,10 @@ public class Player : ScoreNotifier
             Notify(Time.realtimeSinceStartup, playerName);
             StartCoroutine(ReloadScene());
         }
-        if (other.CompareTag("HoleOfDeath"))
-        {
-            other.GetComponent<BoxCollider>().enabled = false;
-        }
+        //if (other.CompareTag("HoleOfDeath"))
+        //{
+        //    other.GetComponent<BoxCollider>().enabled = false;
+        //}
     }
 
     private IEnumerator ReloadScene()
