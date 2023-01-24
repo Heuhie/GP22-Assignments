@@ -31,7 +31,7 @@ public class HighScoreBoard : ScoreObserver
     public int distanceBetweenLines = 30;
 
     [SerializeField] private int entriesToShow = 5;
-    [SerializeField] private Transform highscoresHolderTransform;
+    [SerializeField] private Transform highscoresHolder;
     [SerializeField] private GameObject scoreboardEntryObject;
 
     private GameObject highscoreEntry;
@@ -39,8 +39,8 @@ public class HighScoreBoard : ScoreObserver
     [Header("Test")]
     [SerializeField] ScoreboardEntryData testEntryData = new ScoreboardEntryData();
 
-    private string savePath => $"{Application.persistentDataPath}/highscores.json";
-
+    private string savePath;
+   
     private void Awake()
     {
         if(instance != null)
@@ -56,14 +56,20 @@ public class HighScoreBoard : ScoreObserver
 
     private void Start()
     {
+        savePath = Application.persistentDataPath + "/highscores.json";
         GameObject.Find("Player").GetComponent<Player>().RegisterObserver(this);
-
-        ScoreBoardSaveData savedScores = GetSavedScores();
+        Debug.Log("starts at least");
+        FirebaseSaveData.Instance.LoadFromFirebase();
+        ScoreBoardSaveData savedScores = FirebaseSaveData.Instance.GetLoadedScoreboard();
+        Debug.Log("Gets here");
+        //ScoreBoardSaveData savedScores = GetSavedScores();
 
 
         UpdateUI(savedScores);
-        
-        SaveScores(savedScores);
+
+        //StartCoroutine(StartupDelay(savedScores));
+        //FirebaseSaveData.Instance.SaveToFirebase(savedScores);
+        //SaveScores(savedScores);
     }
 
     [ContextMenu("Ass Test")]
@@ -72,43 +78,47 @@ public class HighScoreBoard : ScoreObserver
         AddEntry(testEntryData);
     }
 
-    private ScoreBoardSaveData GetSavedScores()
+    private IEnumerator StartupDelay(ScoreBoardSaveData savedScores)
     {
-        if(!File.Exists(savePath))
-        {
-            File.Create(savePath).Dispose();
-            return new ScoreBoardSaveData();
-        }
-
-        using (StreamReader stream = new StreamReader(savePath))
-        {
-            string json = stream.ReadToEnd();
-
-            return JsonUtility.FromJson<ScoreBoardSaveData>(json);
-        }
+        yield return new WaitForSeconds(5);
+        FirebaseSaveData.Instance.SaveToFirebase(savedScores);
     }
+
+    //private ScoreBoardSaveData GetSavedScores()
+    //{
+    //    if(!File.Exists(savePath))
+    //    {
+    //        File.Create(savePath).Dispose();
+    //        return new ScoreBoardSaveData();
+    //    }
+
+    //    using (StreamReader stream = new StreamReader(savePath))
+    //    {
+    //        string json = stream.ReadToEnd();
+
+    //        return JsonUtility.FromJson<ScoreBoardSaveData>(json);
+    //    }
+    //}
     
-    private void SaveScores(ScoreBoardSaveData scoreBoardSaveData)
-    {
-        using (StreamWriter stream = new StreamWriter(savePath))
-        {
-            string json = JsonUtility.ToJson(scoreBoardSaveData, true);
-            stream.Write(json);
-
-           
-        }
-    }
+    //private void SaveScores(ScoreBoardSaveData scoreBoardSaveData)
+    //{
+    //    using (StreamWriter stream = new StreamWriter(savePath))
+    //    {
+    //        string json = JsonUtility.ToJson(scoreBoardSaveData, true);
+    //        stream.Write(json);     
+    //    }
+    //}
 
     private void UpdateUI(ScoreBoardSaveData savedScores)
     {
-        foreach(Transform child in highscoresHolderTransform)
+        foreach(Transform child in highscoresHolder)
         {
             Destroy(child.gameObject);
         }
 
         for(int i = 0; i < savedScores.highscoreList.Count; i++)
         {
-            highscoreEntry = Instantiate(scoreboardEntryObject, highscoresHolderTransform);
+            highscoreEntry = Instantiate(scoreboardEntryObject, highscoresHolder);
             highscoreEntry.GetComponent<ScoreboardEntry>().InitializeScoreboard(savedScores.highscoreList[i]);
             Vector2 anchorPosition = highscoreEntry.GetComponent<RectTransform>().anchoredPosition;
             anchorPosition = new Vector2(anchorPosition.x , anchorPosition.y -distanceBetweenLines * i);
@@ -118,7 +128,9 @@ public class HighScoreBoard : ScoreObserver
 
     public void AddEntry(ScoreboardEntryData scoreboardEntryData)
     {
-        ScoreBoardSaveData savedScores = GetSavedScores();
+        FirebaseSaveData.Instance.LoadFromFirebase();
+        ScoreBoardSaveData savedScores = FirebaseSaveData.Instance.GetLoadedScoreboard();
+        //ScoreBoardSaveData savedScores = GetSavedScores();
 
         bool scoreAdded = false;
 
@@ -143,7 +155,9 @@ public class HighScoreBoard : ScoreObserver
         }
 
         UpdateUI(savedScores);
-        SaveScores(savedScores);
+
+        FirebaseSaveData.Instance.SaveToFirebase(savedScores);
+        //SaveScores(savedScores);
     }
 
     public override void OnNotify(float time, string name)

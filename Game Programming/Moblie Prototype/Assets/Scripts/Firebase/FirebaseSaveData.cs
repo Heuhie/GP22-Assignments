@@ -3,11 +3,6 @@ using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
 
-public class PlayerData
-{
-    public Vector2 position;
-
-}
 
 public class FirebaseSaveData : MonoBehaviour
 {
@@ -16,14 +11,12 @@ public class FirebaseSaveData : MonoBehaviour
     public static FirebaseSaveData Instance { get { return instance; } }
 
     private FirebaseDatabase database;
-    private PlayerData playerData;
     private ScoreBoardSaveData scoreBoardSaveData;
 
 
     public GameObject player;
     public float playerPosition;
 
-    public string jsonSaveData;
 
     private void Awake()
     {
@@ -36,64 +29,49 @@ public class FirebaseSaveData : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        //playerData = new PlayerData();
-        //playerData.position = player.transform.position;
-
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
                 Debug.LogError(task.Exception);
 
             database = FirebaseDatabase.DefaultInstance;
-
-            string json = JsonUtility.ToJson(playerData);
-            database.RootReference.Child("Hello").SetValueAsync(json);
+            Debug.Log("database set");
         });
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+       
+    }
+
     // Update is called once per frame
-    void Update()
+    public void SaveToFirebase(ScoreBoardSaveData scoreBoard)
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            playerData.position = player.transform.position;
-            string json = JsonUtility.ToJson(playerData);
-            database.RootReference.Child("New Transform").SetValueAsync(json);
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LoadFromFirebase();
-            player.transform.position = playerData.position;
-        }
+        string json = JsonUtility.ToJson(scoreBoard);
+        database.RootReference.Child("HighScore").SetRawJsonValueAsync(json);
     }
 
-    public void SaveToFirebase(string jsonSaveData)
-    {
-        database.RootReference.Child("HighScore").SetValueAsync(jsonSaveData);
-    }
 
-    public ScoreBoardSaveData LoadFromFirebase()
+    public void LoadFromFirebase()
     {
         database.RootReference.Child("HighScore").GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
             {
+                Debug.Log("runs error");
                 Debug.LogError(task.Exception);
-                scoreBoardSaveData = new ScoreBoardSaveData();
             }
 
+            Debug.Log("Gets snap almost");
             DataSnapshot snap = task.Result;
 
             scoreBoardSaveData = JsonUtility.FromJson<ScoreBoardSaveData>(snap.GetRawJsonValue());
         });
+    }
+
+    public ScoreBoardSaveData GetLoadedScoreboard()
+    {
         return scoreBoardSaveData;
     }
 }
