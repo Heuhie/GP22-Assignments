@@ -135,4 +135,9 @@ public class FirebaseAuthenticator : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void SignOut()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

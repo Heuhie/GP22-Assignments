@@ -35,7 +35,7 @@ public class SetupMenu : MonoBehaviour
         spriteSlider.onValueChanged.AddListener(SpriteUpdate);
 
         playButton.onClick.AddListener(ButtonClick);
-
+        Debug.Log(FirebaseAuthenticator.Instance.GetUserID);
         //if(FirebaseAuthenticator.Instance.GetUserID == null)
         //{
         //    SceneManager.LoadScene(0);

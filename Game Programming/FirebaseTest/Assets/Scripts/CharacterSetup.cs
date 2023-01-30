@@ -12,7 +12,7 @@ public class CharacterSetup : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        FirebaseSaveManager.Instance.LoadData("users" + FirebaseAuthenticator.Instance.GetUserID, UserLoaded);
+        FirebaseSaveManager.Instance.LoadData("users/" + FirebaseAuthenticator.Instance.GetUserID, UserLoaded);
     }
 
     private void UserLoaded(DataSnapshot snapshot)

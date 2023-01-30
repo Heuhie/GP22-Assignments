@@ -43,6 +43,7 @@ public class FirebaseSaveManager : MonoBehaviour
             if (task.Exception != null)
             {
                 Debug.Log(task.Exception);
+                Debug.Log(path);
             }
 
             onLoadedDelegate(task.Result);
