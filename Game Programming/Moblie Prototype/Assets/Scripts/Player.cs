@@ -64,6 +64,11 @@ public class Player : ScoreNotifier
         //{
         //    other.GetComponent<BoxCollider>().enabled = false;
         //}
+
+        if(other.CompareTag("Finish"))
+        {
+            Debug.Log("Finish");
+        }
     }
 
     private IEnumerator ReloadScene()

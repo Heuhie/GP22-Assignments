@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "659800909330",
+    "firebase_url": "https://fir-test2-5caee-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "fir-test2-5caee",
+    "storage_bucket": "fir-test2-5caee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659800909330:android:a8e51146c7c3863b8f5acb",
+        "android_client_info": {
+          "package_name": "com.Henrik.Firebase2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659800909330-8pc0s5mhb0f7g5c6i9bjd0u584apd7tr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqnQnt6TLEuwS8Ws6zrCLaoDX6ATdTx0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659800909330-8pc0s5mhb0f7g5c6i9bjd0u584apd7tr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

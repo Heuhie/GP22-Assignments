@@ -7,7 +7,7 @@ public interface IFirebaseObserver
     public void OnDatabaseDataLoaded();
 }
 
-public abstract class IFarebaseSubject : MonoBehaviour
+public abstract class IFirebaseSubject : MonoBehaviour
 {
     private List<IFirebaseObserver> updateObservers = new List<IFirebaseObserver>();
 

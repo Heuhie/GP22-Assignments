@@ -4,7 +4,7 @@ using Firebase.Database;
 using Firebase.Extensions;
 
 
-public class FirebaseSaveData : IFarebaseSubject
+public class FirebaseSaveData : IFirebaseSubject
 {
     private static FirebaseSaveData instance;
 

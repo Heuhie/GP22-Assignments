@@ -1,40 +1,90 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using Firebase.Auth;
 using Firebase;
+using Firebase.Database;
 using Firebase.Extensions;
 
 public class FirebaseAuthenticator : MonoBehaviour
 {
+    private static FirebaseAuthenticator instance;
+    public static FirebaseAuthenticator Instance { get { return instance; } }
+
     public TMP_InputField email;
     public TMP_InputField password;
     public TextMeshProUGUI status;
 
     public Button playButton;
 
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
+    public string GetUserID { get { return auth.CurrentUser.UserId; } }
 
-    // Start is called before the first frame update
-    void Start()
+
+
+    private void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        //if(auth == null)
+        //{
+        //    SceneManager.LoadScene(0);
+        //}
+
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
                 Debug.LogError(task.Exception);
 
             auth = FirebaseAuth.DefaultInstance;
+
+            if(auth.CurrentUser == null)
+            {
+                AnonymousSignIn();
+            }
+            else
+            {
+                Debug.Log(auth.CurrentUser.Email + " is logged in");
+                //playButton.interactable = true;
+                LoadNextScene();
+            }
         });
     }
 
-    public void SignInButton()
+    public void LoadNextScene()
     {
-        SignInFirebase(email.text, password.text);
+        SceneManager.LoadScene(1);
     }
 
-    private void SignInFirebase(string email, string password)
+    private void AnonymousSignIn()
+    {
+        auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.Exception != null)
+            {
+                Debug.LogWarning(task.Exception);
+            }
+            else
+            {
+                FirebaseUser newUser = task.Result;
+                Debug.LogFormat("User logged in succesfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
+
+                playButton.interactable = true;
+            }
+        });
+    }
+
+    public void SignInFirebase(string email, string password)
     {
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
@@ -49,17 +99,18 @@ public class FirebaseAuthenticator : MonoBehaviour
                   newUser.DisplayName, newUser.UserId);
                 status.text = newUser.Email + "is signed in";
 
-                playButton.interactable = true;
+                //playButton.interactable = true;
+                LoadNextScene();
             }
         });
     }
 
-    public void RegisterButton()
-    {
-        RegisterNewUser(email.text, password.text);
-    }
+    //public void RegisterButton()
+    //{
+    //    RegisterNewUser(email.text, password.text);
+    //}
 
-    private void RegisterNewUser(string email, string password)
+    public void RegisterNewUser(string email, string password)
     {
         Debug.Log("Starting Registration");
         status.text = "Starting Registration";
@@ -72,7 +123,7 @@ public class FirebaseAuthenticator : MonoBehaviour
             else
             {
                 FirebaseUser newUser = task.Result;
-                Debug.LogFormat("User Registerd: {0} ({1})",
+                Debug.LogFormat("User Registered: {0} ({1})",
                   newUser.DisplayName, newUser.UserId);
 
                 playButton.interactable = true;
@@ -80,8 +131,8 @@ public class FirebaseAuthenticator : MonoBehaviour
         });
     }
 
-    public void DebugLogIn(int number)
+    public void StartCharacterSelectScene()
     {
-        SignInFirebase("test" + number + "@test.test", "password");
+        SceneManager.LoadScene(1);
     }
 }
