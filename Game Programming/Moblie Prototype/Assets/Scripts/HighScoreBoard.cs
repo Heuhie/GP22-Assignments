@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.IO;
-using Firebase;
-using Firebase.Database;
-using Firebase.Auth;
-using Firebase.Extensions;
+
 
 [Serializable] //Needed to save to file
 public class ScoreBoardSaveData

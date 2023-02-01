@@ -7,7 +7,6 @@ using Firebase.Extensions;
 public class FirebaseSaveData : IFirebaseSubject
 {
     private static FirebaseSaveData instance;
-
     public static FirebaseSaveData Instance { get { return instance; } }
 
     private FirebaseDatabase database;
@@ -30,11 +29,6 @@ public class FirebaseSaveData : IFirebaseSubject
             instance = this;
         }
        
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)

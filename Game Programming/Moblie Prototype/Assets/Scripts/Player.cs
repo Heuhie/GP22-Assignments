@@ -19,10 +19,12 @@ public class Player : ScoreNotifier
 
     public TextMeshProUGUI timerText;
     public HighScoreBoard highscore;
+    public GameObject highscoreList;
 
 
     private void Start()
     {
+        highscoreList.SetActive(false);
         rb = GetComponent<Rigidbody>();
         playerMesh = GetComponent<MeshRenderer>();
         //playerColor = PlayerSaveData.Instance.playerColor;
@@ -50,13 +52,6 @@ public class Player : ScoreNotifier
     {
         if (other.CompareTag("Abyss"))
         {
-            Debug.Log("You failed");
-            PlayerSaveData.Instance.finishTime = Time.timeSinceLevelLoad;
-            PlayerSaveData.Instance.Save();
-            ScoreboardEntryData score = new ScoreboardEntryData();
-            score.entryName = name;
-            score.entryTime = Time.realtimeSinceStartup;
-            highscore.AddEntry(score);
             Notify(Time.realtimeSinceStartup, playerName);
             StartCoroutine(ReloadScene());
         }
@@ -68,12 +63,22 @@ public class Player : ScoreNotifier
         if(other.CompareTag("Finish"))
         {
             Debug.Log("Finish");
+            PlayerSaveData.Instance.finishTime = Time.timeSinceLevelLoad;
+            PlayerSaveData.Instance.Save();
+            ScoreboardEntryData score = new ScoreboardEntryData();
+            score.entryName = name;
+            score.entryTime = Time.timeSinceLevelLoad;
+            highscore.AddEntry(score);
+            Notify(Time.realtimeSinceStartup, playerName);
+            highscoreList.SetActive(true);
+            StartCoroutine(ReloadScene());
         }
     }
 
     private IEnumerator ReloadScene()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
+        highscoreList.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
