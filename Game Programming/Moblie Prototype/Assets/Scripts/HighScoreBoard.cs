@@ -70,7 +70,7 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
 
     private void Start()
     {
-        savePath = Application.persistentDataPath + "/highscores.json";
+        //savePath = Application.persistentDataPath + "/highscores.json";
         GameObject.Find("GameManager").GetComponent<FirebaseSaveData>().RegisterObserver(this);
         GameObject.Find("Player").GetComponent<Player>().RegisterObserver(this);
         
