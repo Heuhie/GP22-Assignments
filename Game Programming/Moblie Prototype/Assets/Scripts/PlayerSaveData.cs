@@ -35,12 +35,7 @@ public class PlayerSaveData : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
-
         Load();
-    }
-
-    private void Start()
-    {
     }
 
     public void Save()
@@ -51,7 +46,7 @@ public class PlayerSaveData : MonoBehaviour
         playerData.PlayerColor = playerColor;
         playerData.Time = finishTime;
         string jsonstring = JsonUtility.ToJson(playerData);
-        PlayerPrefs.SetString(PLAYERSAVEDATA ,jsonstring);
+        PlayerPrefs.SetString(PLAYERSAVEDATA, jsonstring);
     }
 
     public void Load()
@@ -69,7 +64,6 @@ public class PlayerSaveData : MonoBehaviour
 
         }
         playerName = playerData.PlayerName;
-        Debug.Log(playerName);
         finishTime = playerData.Time;
         playerColor = playerData.PlayerColor;
     }

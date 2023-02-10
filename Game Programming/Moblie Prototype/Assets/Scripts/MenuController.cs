@@ -48,23 +48,13 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.touchCount > 0)
-        //{
-        //    Touch touch = Input.GetTouch(0);
-        //    touchposition = Camera.main.ScreenToWorldPoint(touch.position);
-
-        //    if(touch.phase == TouchPhase.Began)
-        //    {
-        //        Debug.Log("touched screen");
-        //    }
-        //}
-
         if (Input.GetKey(KeyCode.O) && Input.GetKey(KeyCode.P))
         {
             PlayerPrefs.DeleteAll();
             PlayerPrefs.DeleteKey(PLAYERDATA);
         }
     }
+
     public void ValueChangedCheck()
     {
         //PlayerPrefs.SetString(SCORE_NAME_KEY, nameInput.text);

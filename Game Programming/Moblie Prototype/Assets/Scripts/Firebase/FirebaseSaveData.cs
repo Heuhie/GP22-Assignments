@@ -44,21 +44,21 @@ public class FirebaseSaveData : IFirebaseSubject
     {
         database = FirebaseDatabase.DefaultInstance;
         string json = JsonUtility.ToJson(scoreBoard);
-        database.RootReference.Child("HighScore").SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
+        database.RootReference.Child("highscores").SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
                 Debug.LogError(task.Exception);
             else
                 Debug.Log("Data saved");
         });
-        Debug.Log(database.RootReference.Child("HighScore").SetRawJsonValueAsync(json));
+        Debug.Log(database.RootReference.Child("highscores").SetRawJsonValueAsync(json));
     }
 
 
     public void LoadFromFirebase()
     {
         database = FirebaseDatabase.DefaultInstance;
-        database.RootReference.Child("HighScore").GetValueAsync().ContinueWithOnMainThread(task =>
+        database.RootReference.Child("highscores").GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
             {
@@ -68,7 +68,7 @@ public class FirebaseSaveData : IFirebaseSubject
 
             DataSnapshot snap = task.Result;
             scoreBoardSaveData = JsonUtility.FromJson<ScoreBoardSaveData>(snap.GetRawJsonValue());
-
+            Debug.Log("Data Loaded");
             DatabaseDataLoaded();   //notifies observer
         }); 
     }

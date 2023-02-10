@@ -8,6 +8,8 @@ public class MovePlane : MonoBehaviour
     public float rotation = 1;
     public Transform outerPlaneTransform;
     public Transform mazeTransform;
+    public BoxCollider groundBoxCollider;
+    public MeshCollider groundMeshCollider;
 
     private Vector3 gyroRot;
     private float limitRotation = 7f;
@@ -63,6 +65,20 @@ public class MovePlane : MonoBehaviour
             currentRotation.z = 360 - limitRotation;
             mazeTransform.eulerAngles = currentRotation;
         }
+    }
+
+    public void EnableFalling()
+    {
+        groundBoxCollider.enabled = false;
+        groundMeshCollider.GetComponent<MeshCollider>().enabled = true;
+        Debug.Log("Falling enabled");
+    }
+
+    public void DisableFalling()
+    {
+        groundBoxCollider.GetComponent<BoxCollider>().enabled = true;
+        groundMeshCollider.GetComponent<MeshCollider>().enabled = false;
+        Debug.Log("Falling disabled");
     }
    
 }

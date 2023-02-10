@@ -13,10 +13,13 @@ public class Player : ScoreNotifier
     private float playerColor;
     private string playerName = "Henrik";
     private Rigidbody rb;
+    private Vector3 startPosition;
+    private bool hasWon;
 
     private PlayerSaveData playerSaveData;
     private PlayerSaveData loadedPlayerSaveData;
 
+    public int ballsLeft = 3;
     public TextMeshProUGUI timerText;
     public HighScoreBoard highscore;
     public GameObject highscoreList;
@@ -24,7 +27,8 @@ public class Player : ScoreNotifier
 
     private void Start()
     {
-        highscoreList.SetActive(false);
+        startPosition = transform.position;
+        //highscoreList.SetActive(false);
         rb = GetComponent<Rigidbody>();
         playerMesh = GetComponent<MeshRenderer>();
         //playerColor = PlayerSaveData.Instance.playerColor;
@@ -44,7 +48,7 @@ public class Player : ScoreNotifier
             ScoreboardEntryData score = new ScoreboardEntryData();
             score.entryName = name;
             score.entryTime = Time.realtimeSinceStartup;
-            highscore.AddEntry(score);
+            //highscore.AddEntry(score);
         }
     }
 
@@ -52,30 +56,54 @@ public class Player : ScoreNotifier
     {
         if (other.CompareTag("Abyss"))
         {
-            Notify(Time.realtimeSinceStartup, playerName);
-            StartCoroutine(ReloadScene());
+            ballsLeft--;
+            if(ballsLeft > 0)
+            {
+                StartCoroutine(Respawn());
+            }
+            else
+            {
+                highscoreList.SetActive(true);
+            }
+            Debug.Log(ballsLeft);
         }
-        //if (other.CompareTag("HoleOfDeath"))
-        //{
-        //    other.GetComponent<BoxCollider>().enabled = false;
-        //}
+        if (other.CompareTag("HoleOfDeath"))
+        {
+            other.transform.root.GetComponent<MovePlane>().EnableFalling();
+        }
 
-        if(other.CompareTag("Finish"))
+        if (other.CompareTag("Finish") && !hasWon)
         {
             Debug.Log("Finish");
-            PlayerSaveData.Instance.finishTime = Time.timeSinceLevelLoad;
-            PlayerSaveData.Instance.Save();
+
+            hasWon = true;
             ScoreboardEntryData score = new ScoreboardEntryData();
             score.entryName = name;
             score.entryTime = Time.timeSinceLevelLoad;
-            highscore.AddEntry(score);
+
+            //highscore.AddEntry(score);
             Notify(Time.realtimeSinceStartup, playerName);
             highscoreList.SetActive(true);
-            StartCoroutine(ReloadScene());
+            StartCoroutine(Respawn());
         }
     }
 
-    private IEnumerator ReloadScene()
+    private IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(5);
+        hasWon = false;
+        transform.position = startPosition;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("HoleOfDeath"))
+        {
+            other.transform.root.GetComponent<MovePlane>().DisableFalling();
+        }
+    }
+
+    private IEnumerator Reloadcene()
     {
         yield return new WaitForSeconds(5);
         highscoreList.SetActive(false);

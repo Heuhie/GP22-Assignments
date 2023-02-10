@@ -34,12 +34,6 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
     private GameObject highscoreEntry;
     private ScoreBoardSaveData savedScores;
 
-    public delegate void OnScoreboardLoaded();
-    public static event OnScoreboardLoaded onScoreboardLoaded;
-
-    delegate void OnScoreBoardFetched();
-    OnScoreBoardFetched onScoreBoardFetched;
-
     [Header("Test")]
     [SerializeField] ScoreboardEntryData testEntryData = new ScoreboardEntryData();
 
@@ -58,47 +52,21 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
         }
     }
 
-    private void OnEnable()
-    {
-        onScoreboardLoaded += UpdateLoadedScoreboard;
-    }
-
-    private void OnDisable()
-    {
-        onScoreboardLoaded -= UpdateLoadedScoreboard;
-    }
-
     private void Start()
     {
         //savePath = Application.persistentDataPath + "/highscores.json";
         GameObject.Find("GameManager").GetComponent<FirebaseSaveData>().RegisterObserver(this);
         GameObject.Find("Player").GetComponent<Player>().RegisterObserver(this);
-        
-        Debug.Log(savedScores);
-
-        //CallLoadScoreBoard();
-        //ScoreBoardSaveData savedScores = GetSavedScores();
-        //StartCoroutine(StartupDelay());
-        //UpdateUI(savedScores);
 
         FirebaseSaveData.Instance.LoadFromFirebase();
-
-        //FirebaseSaveData.Instance.SaveToFirebase(savedScores);
-        //SaveScores(savedScores);
-    }
-
-
-    private void UpdateLoadedScoreboard()
-    {
-        //savedScores = FirebaseSaveData.Instance.GetLoadedScoreboard();
-        UpdateUI(savedScores);
-        Debug.Log("Called Updated");
+        Debug.Log(savedScores);
     }
 
     [ContextMenu("Add Test")]
     public void AddTestEntry()
     {
         AddEntry(testEntryData);
+        Debug.Log("testdata Added");
     }
 
     //update visual scoreboard
@@ -123,13 +91,15 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
 
     public void AddEntry(ScoreboardEntryData scoreboardEntryData)
     {
-        FirebaseSaveData.Instance.LoadFromFirebase();
-        //FirebaseSaveData.Instance.GetLoadedScoreboard();
-        //ScoreBoardSaveData savedScores = FirebaseSaveData.Instance.GetLoadedScoreboard();
-        //ScoreBoardSaveData savedScores = GetSavedScores();
+        //FirebaseSaveData.Instance.LoadFromFirebase();
 
         bool scoreAdded = false;
 
+        if(savedScores == null)
+        {
+            Debug.Log("No entries");
+            savedScores = new ScoreBoardSaveData();
+        }
 
         //check if time is better and adds to list if so
         for(int i = 0; i < savedScores.highscoreList.Count; i++)
@@ -161,12 +131,16 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
     }
 
     //Observes if something triggers a new entry
-    public override void OnNotify(float time, string name)
+    public override void 
+        
+        OnNotify(float time, string name)
     {
         ScoreboardEntryData score = new ScoreboardEntryData();
         score.entryName = name;
         score.entryTime = time;
         AddEntry(score);
+
+
         Debug.Log("runs notify");
     }
 
@@ -175,32 +149,17 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
     {
         savedScores = FirebaseSaveData.Instance.GetLoadedScoreboard();
         UpdateUI(savedScores);
-        Debug.Log("Onloaded Triggered");
+        Debug.Log("Onloaded Done");
     }
+
+
+
 
 
     /// <summary>
-    /// LEGACY for saving to desktop
-    /// and coroutines for loading from firebase
+    /// Never used
     /// </summary>
     /// <returns></returns>
-
-    //Legacy Methods
-    private IEnumerator StartupDelay()
-    {
-        yield return new WaitForSeconds(1);
-        savedScores = FirebaseSaveData.Instance.GetLoadedScoreboard();
-        UpdateUI(savedScores);
-    }
-
-    private void CallLoadScoreBoard()
-    {
-        FirebaseSaveData.Instance.LoadFromFirebase();
-        onScoreboardLoaded();
-        Debug.Log("CAlled");
-    }
-
-
     private ScoreBoardSaveData GetSavedScores()
     {
         if (!File.Exists(savePath))
