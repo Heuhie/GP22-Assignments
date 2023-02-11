@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+public class MainMenuController : MonoBehaviour
 {
     private Touch screenTouch;
     private Vector2 touchposition;
@@ -20,7 +20,7 @@ public class MenuController : MonoBehaviour
     public Button playButton;
     public float playerColor;
 
-    private PlayerSaveData playerSaveData;
+    //private PlayerSaveData playerSaveData;
 
     string name;
     float color;
@@ -29,7 +29,7 @@ public class MenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.UpdateGameState(GameState.Menu);
+        GameManager.instance.UpdateGameState(GameState.MainMenu);
 
         //if (PlayerPrefs.HasKey(SCORE_NAME_KEY))
         //{
@@ -71,6 +71,7 @@ public class MenuController : MonoBehaviour
 
     public void StartGame()
     {
+        GameManager.instance.UpdateGameState(GameState.RunningGame);
         PlayerSaveData.Instance.Save();
         SceneManager.LoadScene("MainScene");
     }

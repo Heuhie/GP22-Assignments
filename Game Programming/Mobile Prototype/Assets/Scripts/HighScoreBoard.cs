@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.IO;
-
+using UnityEngine.UI;
 
 [Serializable] //Needed to save to file
 public class ScoreBoardSaveData
@@ -26,6 +26,7 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
     public static HighScoreBoard Instance { get { return instance; } }
 
     public int distanceBetweenLines = 30;
+    public Button backButton;
 
     [SerializeField] private int entriesToShow = 5;
     [SerializeField] private Transform highscoresHolder;

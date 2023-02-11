@@ -11,15 +11,15 @@ public class Player : ScoreNotifier
     private float previousTime;
     private MeshRenderer playerMesh;
     private float playerColor;
-    private string playerName = "Henrik";
+    private string playerName;
     private Rigidbody rb;
     private Vector3 startPosition;
     private bool hasWon;
 
-    private PlayerSaveData playerSaveData;
-    private PlayerSaveData loadedPlayerSaveData;
+    //private PlayerSaveData playerSaveData;
+    //private PlayerSaveData loadedPlayerSaveData;
 
-    public int ballsLeft = 3;
+    public int ballsLeft = 1;
     public TextMeshProUGUI timerText;
     public HighScoreBoard highscore;
     public GameObject highscoreList;
@@ -28,15 +28,15 @@ public class Player : ScoreNotifier
     private void Start()
     {
         startPosition = transform.position;
-        //highscoreList.SetActive(false);
         rb = GetComponent<Rigidbody>();
         playerMesh = GetComponent<MeshRenderer>();
+        playerName = PlayerSaveData.Instance.playerName; 
         //playerColor = PlayerSaveData.Instance.playerColor;
         previousTime = PlayerSaveData.Instance.finishTime;
         timerText.text = "Time: " + previousTime;
         //playerMesh.material.color = Color.HSVToRGB(playerColor, 0.8f, 0.8f);
         //playerMesh.material.color = Color.HSVToRGB(PlayerSaveData.Instance.playerColor, 0.8f, 0.8f);
-        //Debug.Log(PlayerSaveData.Instance.name);
+        Debug.Log(PlayerSaveData.Instance.playerName);
     }
 
     public void Update()
@@ -63,7 +63,8 @@ public class Player : ScoreNotifier
             }
             else
             {
-                highscoreList.SetActive(true);
+                GameManager.instance.UpdateGameState(GameState.GameOver); //<----funkar detta?
+                //highscoreList.SetActive(true);
             }
             Debug.Log(ballsLeft);
         }
@@ -83,7 +84,7 @@ public class Player : ScoreNotifier
 
             //highscore.AddEntry(score);
             Notify(Time.realtimeSinceStartup, playerName);
-            highscoreList.SetActive(true);
+            //highscoreList.SetActive(true);
             StartCoroutine(Respawn());
         }
     }
