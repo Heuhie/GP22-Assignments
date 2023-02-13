@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using System.IO;
 using UnityEngine.UI;
+
 
 [Serializable] //Needed to save to file
 public class ScoreBoardSaveData
@@ -17,6 +15,7 @@ public class ScoreboardEntryData//need to save as for list
 {
     public float entryTime;
     public string entryName;
+    public string entryPosition;
 }
 
 
@@ -35,16 +34,13 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
     private GameObject highscoreEntry;
     private ScoreBoardSaveData savedScores;
 
-    [Header("Test")]
-    [SerializeField] ScoreboardEntryData testEntryData = new ScoreboardEntryData();
-
     private string savePath;
-   
+
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -60,14 +56,8 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
         GameObject.Find("Player").GetComponent<Player>().RegisterObserver(this);
 
         FirebaseSaveData.Instance.LoadFromFirebase();
-        Debug.Log(savedScores);
-    }
-
-    [ContextMenu("Add Test")]
-    public void AddTestEntry()
-    {
-        AddEntry(testEntryData);
-        Debug.Log("testdata Added");
+        Debug.Log("runs start");
+        //Debug.Log(savedScores);
     }
 
     //update visual scoreboard
@@ -103,7 +93,7 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
         }
 
         //check if time is better and adds to list if so
-        for(int i = 0; i < savedScores.highscoreList.Count; i++)
+        for (int i = 0; i < savedScores.highscoreList.Count; i++)
         {
             if(scoreboardEntryData.entryTime < savedScores.highscoreList[i].entryTime)
             {
@@ -113,9 +103,19 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
             }
         }
 
-        //add even if time not better if there are free indexes
-        if(!scoreAdded && savedScores.highscoreList.Count < entriesToShow)
+        if (scoreAdded)
         {
+            //Give correct placement in list 1ST 2ND and so on..
+            for (int i = 0; i < savedScores.highscoreList.Count; i++)
+            {
+                AddPosition(savedScores.highscoreList[i], i);
+            }
+        }
+
+            //add even if time not better if there are free indexes
+            if (!scoreAdded && savedScores.highscoreList.Count < entriesToShow)
+        {
+            AddPosition(scoreboardEntryData, savedScores.highscoreList.Count);
             savedScores.highscoreList.Add(scoreboardEntryData);
         }
 
@@ -128,7 +128,6 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
         UpdateUI(savedScores);
 
         FirebaseSaveData.Instance.SaveToFirebase(savedScores);
-        //SaveScores(savedScores);
     }
 
     //Observes if something triggers a new entry
@@ -145,44 +144,35 @@ public class HighScoreBoard : ScoreObserver, IFirebaseObserver
         Debug.Log("runs notify");
     }
 
+    private void AddPosition(ScoreboardEntryData scoreboardEntry, int position)
+    {
+        position = position + 1;
+
+        switch(position)
+        {
+            case 1:
+                scoreboardEntry.entryPosition = position.ToString() + "ST";
+                break;
+            case 2:
+                scoreboardEntry.entryPosition = position.ToString() + "ND";
+                break; 
+            case 3:
+                scoreboardEntry.entryPosition = position.ToString() + "RD";
+                break;
+            default:
+                scoreboardEntry.entryPosition = position.ToString() + "TH";
+                break;
+                
+                
+
+        }
+    }    
+
     //Waiting for database to finish loading
     public void OnDatabaseDataLoaded()
     {
         savedScores = FirebaseSaveData.Instance.GetLoadedScoreboard();
         UpdateUI(savedScores);
         Debug.Log("Onloaded Done");
-    }
-
-
-
-
-
-    /// <summary>
-    /// Never used
-    /// </summary>
-    /// <returns></returns>
-    private ScoreBoardSaveData GetSavedScores()
-    {
-        if (!File.Exists(savePath))
-        {
-            File.Create(savePath).Dispose();
-            return new ScoreBoardSaveData();
-        }
-
-        using (StreamReader stream = new StreamReader(savePath))
-        {
-            string json = stream.ReadToEnd();
-
-            return JsonUtility.FromJson<ScoreBoardSaveData>(json);
-        }
-    }
-
-    private void SaveScores(ScoreBoardSaveData scoreBoardSaveData)
-    {
-        using (StreamWriter stream = new StreamWriter(savePath))
-        {
-            string json = JsonUtility.ToJson(scoreBoardSaveData, true);
-            stream.Write(json);     
-        }
     }
 }

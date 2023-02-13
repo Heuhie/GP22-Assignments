@@ -18,10 +18,11 @@ public class PauseMenu : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         pauseMenu.SetActive(false);
         highscoreList.SetActive(false);
+        backButton.gameObject.SetActive(false);
 
         pauseButton.onClick.AddListener(OnPauseClick);
         continueButton.onClick.AddListener(OnContinueClick);
@@ -47,6 +48,7 @@ public class PauseMenu : MonoBehaviour
     private void OnHighscoreClick()
     {
         pauseMenu.SetActive(false);
+        backButton.gameObject.SetActive(true);
         highscoreList.SetActive(true);
     }
 
@@ -60,6 +62,7 @@ public class PauseMenu : MonoBehaviour
     private void OnBackButtonClick()
     {
         highscoreList.SetActive(false);
+         backButton.gameObject.SetActive(true);
         pauseMenu.SetActive(true);
     }
 

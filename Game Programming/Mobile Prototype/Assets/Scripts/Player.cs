@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -12,6 +12,7 @@ public class Player : ScoreNotifier
     private MeshRenderer playerMesh;
     private float playerColor;
     private string playerName;
+    private string playerPosition;
     private Rigidbody rb;
     private Vector3 startPosition;
     private bool hasWon;
@@ -20,7 +21,6 @@ public class Player : ScoreNotifier
     //private PlayerSaveData loadedPlayerSaveData;
 
     public int ballsLeft = 1;
-    public TextMeshProUGUI timerText;
     public HighScoreBoard highscore;
     public GameObject highscoreList;
 
@@ -31,11 +31,13 @@ public class Player : ScoreNotifier
         rb = GetComponent<Rigidbody>();
         playerMesh = GetComponent<MeshRenderer>();
         playerName = PlayerSaveData.Instance.playerName; 
-        //playerColor = PlayerSaveData.Instance.playerColor;
+        playerColor = PlayerSaveData.Instance.playerColor;
         previousTime = PlayerSaveData.Instance.finishTime;
-        timerText.text = "Time: " + previousTime;
-        //playerMesh.material.color = Color.HSVToRGB(playerColor, 0.8f, 0.8f);
-        //playerMesh.material.color = Color.HSVToRGB(PlayerSaveData.Instance.playerColor, 0.8f, 0.8f);
+        playerMesh.material.color = Color.HSVToRGB(playerColor, 0.8f, 0.8f);
+
+        //RegisterObserver(HighScoreBoard.Instance);
+        
+   
         Debug.Log(PlayerSaveData.Instance.playerName);
     }
 
@@ -50,6 +52,13 @@ public class Player : ScoreNotifier
             score.entryTime = Time.realtimeSinceStartup;
             //highscore.AddEntry(score);
         }
+
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            TriggerWin();
+        }
+
+        //Debug.Log(hasWon);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -68,6 +77,7 @@ public class Player : ScoreNotifier
             }
             Debug.Log(ballsLeft);
         }
+
         if (other.CompareTag("HoleOfDeath"))
         {
             other.transform.root.GetComponent<MovePlane>().EnableFalling();
@@ -77,6 +87,7 @@ public class Player : ScoreNotifier
         {
             Debug.Log("Finish");
 
+            TriggerWin();
             hasWon = true;
             ScoreboardEntryData score = new ScoreboardEntryData();
             score.entryName = name;
@@ -114,5 +125,18 @@ public class Player : ScoreNotifier
     public void MeshColor(float playerColor)
     {
         playerMesh.material.color = Color.HSVToRGB(playerColor, 1, 1);
+    }
+
+    private void TriggerWin()
+    {
+        GameManager.instance.UpdateGameState(GameState.Win);
+        hasWon= true;
+        //highscoreList.SetActive(true);
+        ScoreboardEntryData score  = new ScoreboardEntryData();
+        score.entryName = name;
+        Debug.Log("Gets to name");
+        score.entryTime = (float)Math.Round(Time.timeSinceLevelLoad, 2);
+        Notify((float)Math.Round(Time.timeSinceLevelLoad, 2), playerName);
+        Debug.Log("runs Notify");
     }
 }

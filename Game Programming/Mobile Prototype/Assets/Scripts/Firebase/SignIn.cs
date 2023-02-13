@@ -132,7 +132,7 @@ public class SignIn : MonoBehaviour
     public void WriteInfo(string data)
     {
         database = FirebaseDatabase.DefaultInstance;
-        database.RootReference.Child("dumbass").SetValueAsync(data).ContinueWithOnMainThread(task =>
+        database.RootReference.Child("Testing").SetValueAsync(data).ContinueWithOnMainThread(task =>
         {
             if (task.Exception != null)
             {

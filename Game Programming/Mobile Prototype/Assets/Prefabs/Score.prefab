@@ -463,3 +463,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryNameText: {fileID: 5734486342018764366}
   entryScoreText: {fileID: 5107229185135069377}
+  entryScorePositionText: {fileID: 6420098397025639284}

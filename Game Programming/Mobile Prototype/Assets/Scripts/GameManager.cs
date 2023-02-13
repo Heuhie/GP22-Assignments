@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     public bool isPauseActive;
     public GameObject gameOverObject;
 
+
     private void Awake()
     {
         if (instance != null)
@@ -27,15 +29,6 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             instance = this;
-        }
-    }
-
-    private void Start()
-    {
-        Debug.Log("runs Start");
-        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0))
-        {
-            Debug.Log("Scene not same");
         }
     }
 
@@ -57,14 +50,16 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             case GameState.RunningGame:
+                Time.timeScale = 1.0f;
                 break;
             case GameState.Die:
                 break;
             case GameState.GameOver:
-                {
-                    gameOverObject.SetActive(true);
-                    break;
-                }
+                gameOverObject.SetActive(true);
+                break;  
+            case GameState.Win:
+                Time.timeScale = 0.0f;
+                break;
         }
 
         Debug.Log(currentState);
@@ -79,5 +74,6 @@ public enum GameState
     RunningGame,
     Die,
     GameOver,
+    Win
 }
 
